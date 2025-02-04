@@ -1,7 +1,6 @@
 {
   "name": "minhas-despesas-microservices",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "https://github.com/JPedro109/minhas-despesas-microservices.git",
   "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
   "license": "MIT",
