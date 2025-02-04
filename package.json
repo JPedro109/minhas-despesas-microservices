@@ -5,6 +5,13 @@
   "repository": "https://github.com/JPedro109/minhas-despesas-microservices.git",
   "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --passWithNoTests --detectOpenHandles --silent",
+    "test:coverage": "yarn test --coverage",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:watch": "yarn test --watchAll",
+    "test:verbose": "jest --passWithNoTests --detectOpenHandles"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
