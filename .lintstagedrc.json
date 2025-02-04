@@ -1,0 +1,7 @@
+{
+    "*.ts": [
+      "eslint . --fix",
+      "prettier --check .",
+      "yarn test:staged"
+    ]
+}
