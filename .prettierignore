@@ -1,0 +1,13 @@
+*.json
+*.mjs
+*.js
+
+README.md
+yarn.lock
+
+node_modules/
+dist/
+.husky/
+coverage/
+prisma/
+.github/
