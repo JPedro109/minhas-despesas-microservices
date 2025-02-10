@@ -35,6 +35,17 @@ import {
 } from "@aws-sdk/client-cognito-identity-provider";
 import { Command, MetadataBearer } from "@smithy/types";
 
+export type OutputLoginDTO = {
+    accessToken: string;
+    refreshToken: string;
+};
+
+export type OutputAccountDTO = {
+    accountId: string;
+    identityProviderId: string;
+    email: string;
+};
+
 export class IdentityProvider {
     private readonly client: CognitoIdentityProviderClient;
 
@@ -78,13 +89,7 @@ export class IdentityProvider {
         await this.sendCommand(command);
     }
 
-    async login(
-        email: string,
-        password: string,
-    ): Promise<{
-        accessToken: string;
-        refreshToken: string;
-    }> {
+    async login(email: string, password: string): Promise<OutputLoginDTO> {
         const command = new InitiateAuthCommand({
             ClientId: envs.awsCognitoClientId,
             AuthFlow: "USER_PASSWORD_AUTH",
@@ -104,11 +109,7 @@ export class IdentityProvider {
         };
     }
 
-    async getAccountInfo(email: string): Promise<{
-        accountId: string;
-        identityProviderId: string;
-        email: string;
-    }> {
+    async getAccountInfo(email: string): Promise<OutputAccountDTO> {
         const command = new AdminGetUserCommand({
             Username: email,
             UserPoolId: envs.awsCognitoUserPoolId,
