@@ -1,2 +1,2 @@
-export * from "./account";
-export * from "./account-consent";
+export * from "./account.dao";
+export * from "./account-consent.dao";

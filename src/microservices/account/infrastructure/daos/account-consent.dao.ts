@@ -1,8 +1,22 @@
 import { Dynamo } from "@/shared";
-import {
-    AccountConsentDynamoModel,
-    AccountConsentModel,
-} from "./account-consent.models";
+
+export type AccountConsentDynamoModel = {
+    AccountId: string;
+    AccountConsentId: string;
+    ConsentVersion: string;
+    IpAddress: string;
+    UserAgent: string;
+    CreatedAt: Date;
+};
+
+export type AccountConsentModel = {
+    accountId: string;
+    accountConsentId: string;
+    consentVersion: string;
+    ipAddress: string;
+    userAgent: string;
+    createdAt: Date;
+};
 
 export class AccountConsentDAO {
     private readonly fatherEntity: string = "Account";

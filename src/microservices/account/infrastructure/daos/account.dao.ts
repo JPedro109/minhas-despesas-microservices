@@ -1,5 +1,18 @@
 import { Dynamo } from "@/shared";
-import { AccountDynamoModel, AccountModel } from "./account.models";
+
+export type AccountDynamoModel = {
+    AccountId: string;
+    IdentityProviderId: string;
+    CreatedAt: Date;
+    UpdatedAt?: Date;
+};
+
+export type AccountModel = {
+    accountId: string;
+    identityProviderId: string;
+    createdAt: Date;
+    updatedAt?: Date;
+};
 
 export class AccountDAO {
     private readonly entity: string = "Account";
