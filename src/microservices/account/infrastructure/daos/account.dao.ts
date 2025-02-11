@@ -55,9 +55,6 @@ export class AccountDAO {
     }
 
     async deleteAccountById(accountId: string): Promise<void> {
-        await this.dynamo.deleteOne(
-            `${AccountDAO.entity}#${accountId}`,
-            `${AccountDAO.entity}#${accountId}`,
-        );
+        await this.dynamo.deletePartion(`${AccountDAO.entity}#${accountId}`);
     }
 }
