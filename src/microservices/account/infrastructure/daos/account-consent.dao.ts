@@ -1,4 +1,5 @@
 import { Dynamo } from "@/shared";
+import { AccountDAO } from "./account.dao";
 
 export type AccountConsentDynamoModel = {
     AccountId: string;
@@ -19,8 +20,9 @@ export type AccountConsentModel = {
 };
 
 export class AccountConsentDAO {
-    private readonly fatherEntity: string = "Account";
-    private readonly entity: string = "AccountConsent";
+    private readonly fatherEntity: string = AccountDAO.entity;
+    static entity: string = "AccountConsent";
+
     constructor(private readonly dynamo: Dynamo) {}
 
     async createAccount(
@@ -28,9 +30,9 @@ export class AccountConsentDAO {
     ): Promise<AccountConsentModel> {
         await this.dynamo.create(
             `${this.fatherEntity}#${data.accountId}`,
-            `${this.entity}#${data.accountId}`,
+            `${AccountConsentDAO.entity}#${data.accountId}`,
             {
-                Type: this.entity,
+                Type: AccountConsentDAO.entity,
                 AccountId: data.accountId,
                 AccountConsentId: data.accountConsentId,
                 ConsentVersion: data.consentVersion,
@@ -48,7 +50,7 @@ export class AccountConsentDAO {
     ): Promise<AccountConsentModel | null> {
         const item = await this.dynamo.get<AccountConsentDynamoModel>(
             `${this.fatherEntity}#${accountId}`,
-            `${this.entity}#`,
+            `${AccountConsentDAO.entity}#`,
             { skBeginsWith: true },
         );
 
