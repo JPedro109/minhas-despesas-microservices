@@ -236,7 +236,10 @@ export class IdentityProvider {
             const result = await this.client.send(command);
             return result as TOutput;
         } catch (e) {
-            if (e instanceof InvalidParameterException) {
+            if (
+                e instanceof InvalidParameterException &&
+                e.message.includes("email")
+            ) {
                 throw new InvalidParamError("O e-mail está inválido");
             }
 
