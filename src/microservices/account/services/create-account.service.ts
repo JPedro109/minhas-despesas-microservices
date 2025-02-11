@@ -2,7 +2,6 @@ import { Utils } from "@/shared";
 import {
     AccountConsentDAO,
     AccountDAO,
-    AccountModel,
     IdentityProvider,
 } from "../infrastructure";
 
@@ -55,7 +54,6 @@ export class CreateAccountService {
             accountId: Utils.createUUID(),
         });
 
-        let identityProviderId: string | null;
         try {
             await this.accountConsentDAO.createAccountConsent({
                 accountConsentId: Utils.createUUID(),
@@ -65,7 +63,7 @@ export class CreateAccountService {
                 userAgent,
             });
 
-            identityProviderId = await this.identityProvider.createAccount(
+            await this.identityProvider.createAccount(
                 databaseAccount.accountId,
                 email,
                 password,
@@ -73,21 +71,8 @@ export class CreateAccountService {
 
             return databaseAccount.accountId;
         } catch (error) {
-            await this.rollback(databaseAccount, identityProviderId);
+            await this.accountDAO.deleteAccountById(databaseAccount.accountId);
             throw error;
-        }
-    }
-
-    private async rollback(
-        account: AccountModel | null,
-        identityProviderId: string | null,
-    ): Promise<void> {
-        if (account) {
-            await this.accountDAO.deleteAccountById(account.accountId);
-        }
-
-        if (identityProviderId) {
-            await this.identityProvider.deleteAccount(identityProviderId);
         }
     }
 }
