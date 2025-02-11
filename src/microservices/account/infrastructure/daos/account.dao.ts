@@ -20,7 +20,7 @@ export class AccountDAO {
     constructor(private readonly dynamo: Dynamo) {}
 
     async createAccount(
-        data: Omit<AccountModel, "accountId">,
+        data: Omit<AccountModel, "accountId" | "createdAt">,
     ): Promise<AccountModel> {
         const accountId = Utils.createUUID();
 
