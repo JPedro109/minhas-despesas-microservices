@@ -6,7 +6,7 @@ import {
     IdentityProvider,
 } from "../infrastructure";
 
-export type CreateUserDTO = {
+export type CreateAccountDTO = {
     email: string;
     password: string;
     consentVersion: string;
@@ -14,7 +14,7 @@ export type CreateUserDTO = {
     userAgent: string;
 };
 
-export const createUserSchema = {
+export const createAccountSchema = {
     email: {
         type: "string",
         optional: false,
@@ -37,7 +37,7 @@ export const createUserSchema = {
     },
 };
 
-export class CreateUserService {
+export class CreateAccountService {
     constructor(
         private readonly accountDAO: AccountDAO,
         private readonly accountConsentDAO: AccountConsentDAO,
@@ -50,7 +50,7 @@ export class CreateUserService {
         consentVersion,
         userAgent,
         ipAddress,
-    }: CreateUserDTO): Promise<string> {
+    }: CreateAccountDTO): Promise<string> {
         const databaseAccount = await this.accountDAO.createAccount({
             accountId: Utils.createUUID(),
         });

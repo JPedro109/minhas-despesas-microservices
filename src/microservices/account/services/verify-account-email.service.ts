@@ -1,11 +1,11 @@
 import { IdentityProvider } from "../infrastructure";
 
-export type VerifyUserEmailDTO = {
+export type VerifyAccountEmailDTO = {
     email: string;
     code: string;
 };
 
-export const verifyUserEmailSchema = {
+export const verifyAccountEmailSchema = {
     email: {
         type: "string",
         optional: false,
@@ -16,10 +16,10 @@ export const verifyUserEmailSchema = {
     },
 };
 
-export class VerifyUserEmailService {
+export class VerifyAccountEmailService {
     constructor(private readonly identityProvider: IdentityProvider) {}
 
-    async execute({ email, code }: VerifyUserEmailDTO): Promise<void> {
+    async execute({ email, code }: VerifyAccountEmailDTO): Promise<void> {
         await this.identityProvider.verifyEmail(email, code);
     }
 }

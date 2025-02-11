@@ -1,2 +1,2 @@
-export * from "./create-user.service";
-export * from "./verify-user-email.service";
+export * from "./create-account.service";
+export * from "./verify-account-email.service";
