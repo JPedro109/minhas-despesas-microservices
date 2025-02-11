@@ -134,7 +134,7 @@ export class IdentityProvider {
     }
 
     async refreshToken(
-        accountId: string,
+        identityProviderId: string,
         refreshToken: string,
     ): Promise<string> {
         const command = new InitiateAuthCommand({
@@ -142,7 +142,7 @@ export class IdentityProvider {
             AuthFlow: "REFRESH_TOKEN_AUTH",
             AuthParameters: {
                 REFRESH_TOKEN: refreshToken,
-                SECRET_HASH: this.calculateSecretHash(accountId),
+                SECRET_HASH: this.calculateSecretHash(identityProviderId),
             },
         });
 
