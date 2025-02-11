@@ -26,7 +26,7 @@ export class AccountConsentDAO {
     constructor(private readonly dynamo: Dynamo) {}
 
     async createAccountConsent(
-        data: Omit<AccountConsentModel, "accountConsentId" | "createdAt">,
+        data: Omit<AccountConsentModel, "createdAt">,
     ): Promise<AccountConsentModel> {
         const accountConsentId = Utils.createUUID();
 
