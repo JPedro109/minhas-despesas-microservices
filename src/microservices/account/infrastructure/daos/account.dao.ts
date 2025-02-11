@@ -1,17 +1,13 @@
-import { Dynamo, Utils } from "@/shared";
+import { Dynamo } from "@/shared";
 
 export type AccountDynamoModel = {
     AccountId: string;
-    IdentityProviderId: string;
     CreatedAt: Date;
-    UpdatedAt?: Date;
 };
 
 export type AccountModel = {
     accountId: string;
-    identityProviderId: string;
     createdAt: Date;
-    updatedAt?: Date;
 };
 
 export class AccountDAO {
@@ -20,22 +16,19 @@ export class AccountDAO {
     constructor(private readonly dynamo: Dynamo) {}
 
     async createAccount(
-        data: Omit<AccountModel, "accountId" | "createdAt">,
+        data: Omit<AccountModel, "createdAt">,
     ): Promise<AccountModel> {
-        const accountId = Utils.createUUID();
-
         await this.dynamo.create(
-            `${AccountDAO.entity}#${accountId}`,
-            `${AccountDAO.entity}#${accountId}`,
+            `${AccountDAO.entity}#${data.accountId}`,
+            `${AccountDAO.entity}#${data.accountId}`,
             {
                 Type: AccountDAO.entity,
-                AccountId: accountId,
-                IdentityProviderId: data.identityProviderId,
+                AccountId: data.accountId,
                 CreatedAt: new Date().toISOString(),
             },
         );
 
-        return await this.getAccountById(accountId);
+        return await this.getAccountById(data.accountId);
     }
 
     async getAccountById(accountId: string): Promise<AccountModel | null> {
@@ -48,9 +41,7 @@ export class AccountDAO {
 
         return {
             accountId: item.AccountId,
-            identityProviderId: item.IdentityProviderId,
             createdAt: item.CreatedAt,
-            updatedAt: item.UpdatedAt,
         };
     }
 
