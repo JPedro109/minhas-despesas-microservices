@@ -1,4 +1,4 @@
-import { Dynamo } from "@/shared";
+import { Dynamo, Utils } from "@/shared";
 
 export type AccountDynamoModel = {
     AccountId: string;
@@ -19,19 +19,23 @@ export class AccountDAO {
 
     constructor(private readonly dynamo: Dynamo) {}
 
-    async createAccount(data: AccountModel): Promise<AccountModel> {
+    async createAccount(
+        data: Omit<AccountModel, "accountId">,
+    ): Promise<AccountModel> {
+        const accountId = Utils.createUUID();
+
         await this.dynamo.create(
-            `${AccountDAO.entity}#${data.accountId}`,
-            `${AccountDAO.entity}#${data.accountId}`,
+            `${AccountDAO.entity}#${accountId}`,
+            `${AccountDAO.entity}#${accountId}`,
             {
                 Type: AccountDAO.entity,
-                AccountId: data.accountId,
+                AccountId: accountId,
                 IdentityProviderId: data.identityProviderId,
                 CreatedAt: new Date().toISOString(),
             },
         );
 
-        return await this.getAccountById(data.accountId);
+        return await this.getAccountById(accountId);
     }
 
     async getAccountById(accountId: string): Promise<AccountModel | null> {

@@ -1,9 +1,9 @@
-import { Dynamo } from "@/shared";
+import { Dynamo, Utils } from "@/shared";
 import { AccountDAO } from "./account.dao";
 
 export type AccountConsentDynamoModel = {
-    AccountId: string;
     AccountConsentId: string;
+    AccountId: string;
     ConsentVersion: string;
     IpAddress: string;
     UserAgent: string;
@@ -11,8 +11,8 @@ export type AccountConsentDynamoModel = {
 };
 
 export type AccountConsentModel = {
-    accountId: string;
     accountConsentId: string;
+    accountId: string;
     consentVersion: string;
     ipAddress: string;
     userAgent: string;
@@ -26,15 +26,17 @@ export class AccountConsentDAO {
     constructor(private readonly dynamo: Dynamo) {}
 
     async createAccount(
-        data: AccountConsentModel,
+        data: Omit<AccountConsentModel, "accountConsentId">,
     ): Promise<AccountConsentModel> {
+        const accountConsentId = Utils.createUUID();
+
         await this.dynamo.create(
             `${this.fatherEntity}#${data.accountId}`,
-            `${AccountConsentDAO.entity}#${data.accountId}`,
+            `${AccountConsentDAO.entity}#${accountConsentId}`,
             {
                 Type: AccountConsentDAO.entity,
                 AccountId: data.accountId,
-                AccountConsentId: data.accountConsentId,
+                AccountConsentId: accountConsentId,
                 ConsentVersion: data.consentVersion,
                 IpAddress: data.ipAddress,
                 UserAgent: data.userAgent,
