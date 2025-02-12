@@ -7,3 +7,4 @@ export * from "./update-account-email.service";
 export * from "./send-password-recovery-email.service";
 export * from "./recovery-password.service";
 export * from "./update-account-password.service";
+export * from "./delete-account.service";
