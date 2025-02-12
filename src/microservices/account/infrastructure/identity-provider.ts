@@ -109,9 +109,11 @@ export class IdentityProvider {
         };
     }
 
-    async getAccountInfo(email: string): Promise<OutputAccountDTO> {
+    async getAccountInfo(
+        identityProviderId: string,
+    ): Promise<OutputAccountDTO> {
         const command = new AdminGetUserCommand({
-            Username: email,
+            Username: identityProviderId,
             UserPoolId: envs.awsCognitoUserPoolId,
         });
 
@@ -177,10 +179,13 @@ export class IdentityProvider {
         await this.sendCommand(command);
     }
 
-    async updatePassword(email: string, newPassword: string): Promise<void> {
+    async updatePassword(
+        identityProviderId: string,
+        newPassword: string,
+    ): Promise<void> {
         const command = new AdminSetUserPasswordCommand({
             UserPoolId: envs.awsCognitoUserPoolId,
-            Username: email,
+            Username: identityProviderId,
             Password: newPassword,
             Permanent: true,
         });
