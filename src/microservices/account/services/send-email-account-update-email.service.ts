@@ -6,11 +6,6 @@ export type SendAccountEmailUpdateEmailDTO = {
     newEmail: string;
 };
 
-export type SendAccountEmailUpdateEmailResponseDTO = {
-    accessToken: string;
-    refreshToken: string;
-};
-
 export const sendAccountEmailUpdateEmailSchema = {
     identityProviderId: {
         type: "string",
