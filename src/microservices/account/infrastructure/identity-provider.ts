@@ -111,28 +111,37 @@ export class IdentityProvider {
 
     async getAccountInfo(
         identityProviderId: string,
-    ): Promise<OutputAccountDTO> {
-        const command = new AdminGetUserCommand({
-            Username: identityProviderId,
-            UserPoolId: envs.awsCognitoUserPoolId,
-        });
+    ): Promise<OutputAccountDTO | null> {
+        try {
+            const command = new AdminGetUserCommand({
+                Username: identityProviderId,
+                UserPoolId: envs.awsCognitoUserPoolId,
+            });
 
-        const response =
-            await this.sendCommand<AdminGetUserCommandOutput>(command);
+            const response =
+                await this.sendCommand<AdminGetUserCommandOutput>(command);
 
-        const accountInfo = response.UserAttributes.reduce(
-            (data, { Name, Value }) => ({
-                ...data,
-                [String(Name)]: Value,
-            }),
-            {},
-        );
+            const accountInfo = response.UserAttributes.reduce(
+                (data, { Name, Value }) => ({
+                    ...data,
+                    [String(Name)]: Value,
+                }),
+                {},
+            );
 
-        return {
-            accountId: accountInfo["custom:account_id"],
-            identityProviderId: response.Username,
-            email: accountInfo["email"],
-        };
+            return {
+                accountId: accountInfo["custom:account_id"],
+                identityProviderId: response.Username,
+                email: accountInfo["email"],
+            };
+        } catch (e) {
+            if (
+                e instanceof UserNotFoundException ||
+                e instanceof ResourceNotFoundException
+            ) {
+                return null;
+            }
+        }
     }
 
     async refreshToken(
