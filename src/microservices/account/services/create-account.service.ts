@@ -1,4 +1,4 @@
-import { Utils } from "@/shared";
+import { RequestSchema, Utils } from "@/shared";
 import {
     AccountConsentDAO,
     AccountDAO,
@@ -13,7 +13,7 @@ export type CreateAccountDTO = {
     userAgent: string;
 };
 
-export const createAccountSchema = {
+export const createAccountSchema: RequestSchema = {
     email: {
         type: "string",
         optional: false,
@@ -23,14 +23,6 @@ export const createAccountSchema = {
         optional: false,
     },
     consentVersion: {
-        type: "string",
-        optional: false,
-    },
-    userAgent: {
-        type: "string",
-        optional: false,
-    },
-    ipAddress: {
         type: "string",
         optional: false,
     },

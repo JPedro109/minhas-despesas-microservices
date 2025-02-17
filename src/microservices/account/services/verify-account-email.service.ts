@@ -1,3 +1,4 @@
+import { RequestSchema } from "@/shared";
 import { IdentityProvider } from "../infrastructure";
 
 export type VerifyAccountEmailDTO = {
@@ -5,7 +6,7 @@ export type VerifyAccountEmailDTO = {
     code: string;
 };
 
-export const verifyAccountEmailSchema = {
+export const verifyAccountEmailSchema: RequestSchema = {
     email: {
         type: "string",
         optional: false,

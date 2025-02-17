@@ -1,3 +1,4 @@
+import { RequestSchema } from "@/shared";
 import { AccountDAO, IdentityProvider } from "../infrastructure";
 
 export type DeleteAccountDTO = {
@@ -5,7 +6,7 @@ export type DeleteAccountDTO = {
     identityProviderId: string;
 };
 
-export const deleteAccountSchema = {
+export const deleteAccountSchema: RequestSchema = {
     accountId: {
         type: "string",
         optional: false,

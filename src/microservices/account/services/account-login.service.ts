@@ -1,3 +1,4 @@
+import { RequestSchema } from "@/shared";
 import { IdentityProvider } from "../infrastructure";
 
 export type AccountLoginDTO = {
@@ -8,9 +9,10 @@ export type AccountLoginDTO = {
 export type AccountLoginResponseDTO = {
     accessToken: string;
     refreshToken: string;
+    identityProviderId: string;
 };
 
-export const accountLoginSchema = {
+export const accountLoginSchema: RequestSchema = {
     email: {
         type: "string",
         optional: false,
@@ -28,6 +30,14 @@ export class AccountLoginService {
         email,
         password,
     }: AccountLoginDTO): Promise<AccountLoginResponseDTO> {
-        return await this.identityProvider.login(email, password);
+        const tokens = await this.identityProvider.login(email, password);
+
+        const { identityProviderId } =
+            await this.identityProvider.getAccountInfo(email);
+
+        return {
+            ...tokens,
+            identityProviderId,
+        };
     }
 }

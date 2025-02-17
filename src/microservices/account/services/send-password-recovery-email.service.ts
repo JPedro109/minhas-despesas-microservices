@@ -1,10 +1,11 @@
+import { RequestSchema } from "@/shared";
 import { IdentityProvider } from "../infrastructure";
 
 export type SendPasswordRecoveryEmailDTO = {
     email: string;
 };
 
-export const sendPasswordRecoveryEmailSchema = {
+export const sendPasswordRecoveryEmailSchema: RequestSchema = {
     email: {
         type: "string",
         optional: false,

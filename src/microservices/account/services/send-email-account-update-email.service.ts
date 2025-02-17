@@ -1,4 +1,4 @@
-import { NotFoundError } from "@/shared";
+import { NotFoundError, RequestSchema } from "@/shared";
 import { IdentityProvider } from "../infrastructure";
 
 export type SendAccountEmailUpdateEmailDTO = {
@@ -6,7 +6,7 @@ export type SendAccountEmailUpdateEmailDTO = {
     newEmail: string;
 };
 
-export const sendAccountEmailUpdateEmailSchema = {
+export const sendAccountEmailUpdateEmailSchema: RequestSchema = {
     identityProviderId: {
         type: "string",
         optional: false,

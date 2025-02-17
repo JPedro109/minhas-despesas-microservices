@@ -1,16 +1,17 @@
+import { RequestSchema } from "@/shared";
 import { IdentityProvider } from "../infrastructure";
 
 export type UpdateAccountPasswordDTO = {
     identityProviderId: string;
-    password: string;
+    newPassword: string;
 };
 
-export const updateAccountPasswordSchema = {
+export const updateAccountPasswordSchema: RequestSchema = {
     identityProviderId: {
         type: "string",
         optional: false,
     },
-    password: {
+    newPassword: {
         type: "string",
         optional: false,
     },
@@ -21,11 +22,11 @@ export class UpdateAccountPasswordService {
 
     async execute({
         identityProviderId,
-        password,
+        newPassword,
     }: UpdateAccountPasswordDTO): Promise<void> {
         await this.identityProvider.updatePassword(
             identityProviderId,
-            password,
+            newPassword,
         );
     }
 }

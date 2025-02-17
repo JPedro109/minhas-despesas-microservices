@@ -1,3 +1,4 @@
+import { RequestSchema } from "@/shared";
 import { IdentityProvider } from "../infrastructure";
 
 export type RefreshAccountTokenDTO = {
@@ -5,7 +6,7 @@ export type RefreshAccountTokenDTO = {
     refreshToken: string;
 };
 
-export const refreshAccountTotkenSchema = {
+export const refreshAccountTokenSchema: RequestSchema = {
     identityProviderId: {
         type: "string",
         optional: false,

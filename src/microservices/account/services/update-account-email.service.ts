@@ -1,3 +1,4 @@
+import { RequestSchema } from "@/shared";
 import { IdentityProvider } from "../infrastructure";
 
 export type UpdateAccountEmailDTO = {
@@ -5,7 +6,7 @@ export type UpdateAccountEmailDTO = {
     code: string;
 };
 
-export const updateAccountEmailSchema = {
+export const updateAccountEmailSchema: RequestSchema = {
     accessToken: {
         type: "string",
         optional: false,

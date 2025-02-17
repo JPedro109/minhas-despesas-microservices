@@ -1,3 +1,4 @@
+import { RequestSchema } from "@/shared";
 import { IdentityProvider } from "../infrastructure";
 
 export type RecoveryPasswordDTO = {
@@ -6,7 +7,7 @@ export type RecoveryPasswordDTO = {
     newPassword: string;
 };
 
-export const recoveryPasswordSchema = {
+export const recoveryPasswordSchema: RequestSchema = {
     email: {
         type: "string",
         optional: false,
