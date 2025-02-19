@@ -27,10 +27,27 @@ export class PlanDAO {
 
     constructor(private readonly dynamo: Dynamo) {}
 
+    async getPlans(): Promise<PlanModel[]> {
+        const items = await this.dynamo.get<PlanDynamoModel>("PLANS");
+
+        if (!items.length) return [];
+
+        return items.map((item) => ({
+            planId: item.PlanId,
+            name: item.Name,
+            description: item.Description,
+            amount: item.Amount,
+            durationInDays: item.DurationInDays,
+            planExternalId: item.PlanExternalId,
+            createdAt: item.CreatedAt,
+            updatedAt: item.UpdatedAt,
+        }));
+    }
+
     async getPlanById(planId: string): Promise<PlanModel | null> {
         const item = await this.dynamo.getOne<PlanDynamoModel>(
-            `${PlanDAO.entity}#${planId}`,
-            `${PlanDAO.entity}#${planId}`,
+            "PLANS",
+            `${planId}`,
         );
 
         if (!item) return null;
