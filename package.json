@@ -39,6 +39,7 @@
     "@middy/http-json-body-parser": "^6.0.0",
     "@middy/http-response-serializer": "^6.0.0",
     "@middy/http-router": "^6.0.0",
+    "stripe": "^17.6.0",
     "zod": "^3.24.2"
   }
 }
