@@ -81,4 +81,14 @@ export class PaymentMethodDAO {
             },
         );
     }
+
+    async deletePaymentMethodByAccountIdAndPaymentMethodId(
+        accountId: string,
+        paymentMethodId: string,
+    ): Promise<void> {
+        await this.dynamo.deleteOne(
+            `${this.fatherEntity}#${accountId}`,
+            `${PaymentMethodDAO.entity}#${paymentMethodId}`,
+        );
+    }
 }
