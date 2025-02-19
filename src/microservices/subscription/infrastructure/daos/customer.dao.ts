@@ -29,6 +29,8 @@ export class CustomerDAO {
                 AccountId: data.accountId,
                 CustomerId: data.customerId,
                 CreatedAt: new Date().toISOString(),
+                GSI1PK: `${CustomerDAO.entity}#${data.accountId}`,
+                GSI1SK: "DETAILS",
             },
         );
 
@@ -43,6 +45,24 @@ export class CustomerDAO {
             `${CustomerDAO.entity}#`,
             {
                 skBeginsWith: true,
+            },
+        );
+
+        if (!item.length) return null;
+
+        return {
+            accountId: item[0].AccountId,
+            customerId: item[0].CustomerId,
+            createdAt: item[0].CreatedAt,
+        };
+    }
+
+    async getCustomerById(customerId: string): Promise<CustomerModel | null> {
+        const item = await this.dynamo.get<CustomerDynamoModel>(
+            `${CustomerDAO.entity}#${customerId}`,
+            "DETAILS",
+            {
+                indexName: "GSI1",
             },
         );
 
