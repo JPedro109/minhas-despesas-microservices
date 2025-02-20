@@ -59,6 +59,7 @@ export class CreateSubscriptionService {
                 subscriptionId: Utils.createUUID(),
                 accountId,
                 subscriptionExternalId,
+                planId,
             });
             return subscription.subscriptionId;
         } catch (e) {

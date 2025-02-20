@@ -4,6 +4,7 @@ export type SubscriptionDynamoModel = {
     AccountId: string;
     SubscriptionId: string;
     SubscriptionExternalId: string;
+    PlanId: string;
     CreatedAt: Date;
 };
 
@@ -11,6 +12,7 @@ export type SubscriptionModel = {
     accountId: string;
     subscriptionId: string;
     subscriptionExternalId: string;
+    planId: string;
     createdAt: Date;
 };
 
@@ -31,6 +33,7 @@ export class SubscriptionDAO {
                 AccountId: data.accountId,
                 SubscriptionId: data.subscriptionId,
                 SubscriptionExternalId: data.subscriptionExternalId,
+                PlanId: data.planId,
                 CreatedAt: new Date().toISOString(),
             },
         );
@@ -55,6 +58,7 @@ export class SubscriptionDAO {
             accountId: item[0].AccountId,
             subscriptionId: item[0].SubscriptionId,
             subscriptionExternalId: item[0].SubscriptionExternalId,
+            planId: item[0].PlanId,
             createdAt: item[0].CreatedAt,
         };
     }
