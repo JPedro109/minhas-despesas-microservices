@@ -25,7 +25,7 @@ import {
     GetAccountSubscriptionService,
     GetPlansService,
     NotifyUserOfSubscriptionPaymentFailureDTO,
-    NotifyUserOfSubscriptionPaymentFailureUseCase,
+    NotifyUserOfSubscriptionPaymentFailureService,
     GetPlanResponseDTO,
     UpdatePaymentMethodNameDTO,
     UpdatePaymentMethodNameService,
@@ -207,7 +207,7 @@ export const handler = Middy.build([
             };
             Utils.validateRequestSchema(dto, createPaymentMethodSchema);
 
-            await new NotifyUserOfSubscriptionPaymentFailureUseCase(
+            await new NotifyUserOfSubscriptionPaymentFailureService(
                 customerDAO,
                 accountDAO,
                 notification,

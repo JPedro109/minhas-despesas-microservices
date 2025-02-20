@@ -10,7 +10,7 @@ export type NotifyUserOfSubscriptionPaymentFailureDTO = {
     customerId: string;
 };
 
-export class NotifyUserOfSubscriptionPaymentFailureUseCase {
+export class NotifyUserOfSubscriptionPaymentFailureService {
     constructor(
         private readonly customerDAO: CustomerDAO,
         private readonly accountDAO: AccountDAO,
