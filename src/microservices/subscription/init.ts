@@ -9,27 +9,33 @@ import {
     Payment,
 } from "./infrastructure";
 import {
-    CreatePaymentMethodDTO,
     createPaymentMethodSchema,
-    CreatePaymentMethodService,
-    CreateSubscriptionDTO,
-    CreateSubscriptionService,
-    DeletePaymentMethodDTO,
     deletePaymentMethodSchema,
-    DeletePaymentMethodService,
-    GetAccountPaymentMethodDTO,
+    getAccountPaymentMethodSchema,
+    updatePaymentMethodNameSchema,
+    updatePaymentMethodTokenSchema,
+    createSubscriptionSchema,
+    getAccountSubscriptionSchema,
+    notifyUserOfSubscriptionPaymentFailureSchema,
+    CreatePaymentMethodDTO,
+    CreateSubscriptionDTO,
+    DeletePaymentMethodDTO,
     GetAccountPaymentMethodResponseDTO,
-    GetAccountPaymentMethodService,
     GetAccountSubscriptionDTO,
+    GetAccountPaymentMethodDTO,
     GetAccountSubscriptionResponseDTO,
-    GetAccountSubscriptionService,
-    GetPlansService,
     NotifyUserOfSubscriptionPaymentFailureDTO,
-    NotifyUserOfSubscriptionPaymentFailureService,
     GetPlanResponseDTO,
     UpdatePaymentMethodNameDTO,
-    UpdatePaymentMethodNameService,
     UpdatePaymentMethodTokenDTO,
+    CreatePaymentMethodService,
+    CreateSubscriptionService,
+    DeletePaymentMethodService,
+    GetAccountPaymentMethodService,
+    GetAccountSubscriptionService,
+    GetPlansService,
+    NotifyUserOfSubscriptionPaymentFailureService,
+    UpdatePaymentMethodNameService,
     UpdatePaymentMethodTokenService,
 } from "./services";
 
@@ -99,7 +105,7 @@ export const handler = Middy.build([
             const dto: GetAccountPaymentMethodDTO = {
                 accountId,
             };
-            Utils.validateRequestSchema(dto, deletePaymentMethodSchema);
+            Utils.validateRequestSchema(dto, getAccountPaymentMethodSchema);
 
             return await new GetAccountPaymentMethodService(
                 accountDAO,
@@ -118,7 +124,7 @@ export const handler = Middy.build([
                 accountId,
                 name,
             };
-            Utils.validateRequestSchema(dto, deletePaymentMethodSchema);
+            Utils.validateRequestSchema(dto, updatePaymentMethodNameSchema);
 
             await new UpdatePaymentMethodNameService(paymentMethodDAO).execute(
                 dto,
@@ -136,7 +142,7 @@ export const handler = Middy.build([
                 accountId,
                 token,
             };
-            Utils.validateRequestSchema(dto, deletePaymentMethodSchema);
+            Utils.validateRequestSchema(dto, updatePaymentMethodTokenSchema);
 
             await new UpdatePaymentMethodTokenService(
                 paymentMethodDAO,
@@ -164,7 +170,7 @@ export const handler = Middy.build([
                 accountId,
                 planId,
             };
-            Utils.validateRequestSchema(dto, createPaymentMethodSchema);
+            Utils.validateRequestSchema(dto, createSubscriptionSchema);
 
             return await new CreateSubscriptionService(
                 customerDAO,
@@ -185,7 +191,7 @@ export const handler = Middy.build([
             const dto: GetAccountSubscriptionDTO = {
                 accountId,
             };
-            Utils.validateRequestSchema(dto, createPaymentMethodSchema);
+            Utils.validateRequestSchema(dto, getAccountSubscriptionSchema);
 
             return await new GetAccountSubscriptionService(
                 accountDAO,
@@ -205,7 +211,10 @@ export const handler = Middy.build([
             const dto: NotifyUserOfSubscriptionPaymentFailureDTO = {
                 customerId,
             };
-            Utils.validateRequestSchema(dto, createPaymentMethodSchema);
+            Utils.validateRequestSchema(
+                dto,
+                notifyUserOfSubscriptionPaymentFailureSchema,
+            );
 
             await new NotifyUserOfSubscriptionPaymentFailureService(
                 customerDAO,

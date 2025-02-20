@@ -1,4 +1,4 @@
-import { NotFoundError } from "@/shared";
+import { NotFoundError, RequestSchema } from "@/shared";
 import {
     AccountDAO,
     CustomerDAO,
@@ -8,6 +8,17 @@ import {
 
 export type NotifyUserOfSubscriptionPaymentFailureDTO = {
     customerId: string;
+};
+
+export const notifyUserOfSubscriptionPaymentFailureSchema: RequestSchema = {
+    accountId: {
+        type: "string",
+        optional: false,
+    },
+    email: {
+        type: "string",
+        optional: false,
+    },
 };
 
 export class NotifyUserOfSubscriptionPaymentFailureService {
