@@ -4,12 +4,14 @@ export type AccountDynamoModel = {
     AccountId: string;
     Email: string;
     CreatedAt: Date;
+    UpdatedAt: Date;
 };
 
 export type AccountModel = {
     accountId: string;
     email: string;
     createdAt: Date;
+    updatedAt: Date;
 };
 
 export class AccountDAO {
@@ -18,7 +20,7 @@ export class AccountDAO {
     constructor(private readonly dynamo: Dynamo) {}
 
     async createAccount(
-        data: Omit<AccountModel, "createdAt">,
+        data: Omit<AccountModel, "createdAt" | "updatedAt">,
     ): Promise<AccountModel> {
         await this.dynamo.create(
             `${AccountDAO.entity}#${data.accountId}`,
@@ -46,7 +48,22 @@ export class AccountDAO {
             accountId: item.AccountId,
             email: item.Email,
             createdAt: item.CreatedAt,
+            updatedAt: item.UpdatedAt,
         };
+    }
+
+    async updateAccountById(
+        accountId: string,
+        data: AccountModel,
+    ): Promise<void> {
+        await this.dynamo.updateOne(
+            `${AccountDAO.entity}#${accountId}`,
+            `${AccountDAO.entity}#${accountId}`,
+            {
+                Email: data.email,
+                UpdatedAt: new Date().toISOString(),
+            },
+        );
     }
 
     async deleteAccountById(accountId: string): Promise<void> {
