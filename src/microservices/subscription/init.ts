@@ -26,7 +26,7 @@ import {
     GetPlansService,
     NotifyUserOfSubscriptionPaymentFailureDTO,
     NotifyUserOfSubscriptionPaymentFailureUseCase,
-    PlanResponseDTO,
+    GetPlanResponseDTO,
     UpdatePaymentMethodNameDTO,
     UpdatePaymentMethodNameService,
     UpdatePaymentMethodTokenDTO,
@@ -149,7 +149,7 @@ export const handler = Middy.build([
         path: "/plans",
         method: "GET",
         successStatusCode: 200,
-        handler: async (): Promise<PlanResponseDTO[]> => {
+        handler: async (): Promise<GetPlanResponseDTO[]> => {
             return await new GetPlansService(planDAO).execute();
         },
     },

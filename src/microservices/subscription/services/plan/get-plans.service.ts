@@ -1,6 +1,6 @@
 import { PlanDAO } from "../../infrastructure";
 
-export type PlanResponseDTO = {
+export type GetPlanResponseDTO = {
     planId: string;
     planName: string;
     planAmount: number;
@@ -11,7 +11,7 @@ export type PlanResponseDTO = {
 export class GetPlansService {
     constructor(private readonly planDAO: PlanDAO) {}
 
-    async execute(): Promise<PlanResponseDTO[]> {
+    async execute(): Promise<GetPlanResponseDTO[]> {
         const plans = await this.planDAO.getPlans();
 
         return plans.map((x) => ({
