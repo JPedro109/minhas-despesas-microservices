@@ -11,6 +11,7 @@ type EnvironmentVariables = {
     localstackEndpoint: string;
     stripeSecretKey: string;
     webhookSecret: string;
+    sendEmailQueue: string;
 };
 
 export const envs: EnvironmentVariables = {
@@ -24,4 +25,5 @@ export const envs: EnvironmentVariables = {
     localstackEndpoint: process.env.LOCALSTACK_ENDPOINT,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     webhookSecret: process.env.WEBHOOK_SECRET,
+    sendEmailQueue: process.env.SEND_EMAIL_QUEUE,
 };
