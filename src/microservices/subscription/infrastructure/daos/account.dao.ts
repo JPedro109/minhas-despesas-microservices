@@ -2,11 +2,13 @@ import { Dynamo } from "@/shared";
 
 export type AccountDynamoModel = {
     AccountId: string;
+    Email: string;
     CreatedAt: Date;
 };
 
 export type AccountModel = {
     accountId: string;
+    email: string;
     createdAt: Date;
 };
 
@@ -24,6 +26,7 @@ export class AccountDAO {
             {
                 Type: AccountDAO.entity,
                 AccountId: data.accountId,
+                Email: data.email,
                 CreatedAt: new Date().toISOString(),
             },
         );
@@ -41,6 +44,7 @@ export class AccountDAO {
 
         return {
             accountId: item.AccountId,
+            email: item.Email,
             createdAt: item.CreatedAt,
         };
     }

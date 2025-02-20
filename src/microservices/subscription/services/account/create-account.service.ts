@@ -3,10 +3,15 @@ import { AccountDAO, CustomerDAO, Payment } from "../../infrastructure";
 
 export type CreateAccountDTO = {
     accountId: string;
+    email: string;
 };
 
 export const createAccountSchema: RequestSchema = {
     accountId: {
+        type: "string",
+        optional: false,
+    },
+    email: {
         type: "string",
         optional: false,
     },
@@ -19,9 +24,10 @@ export class CreateAccountService {
         private readonly payment: Payment,
     ) {}
 
-    async execute({ accountId }: CreateAccountDTO): Promise<string> {
+    async execute({ accountId, email }: CreateAccountDTO): Promise<string> {
         const databaseAccount = await this.accountDAO.createAccount({
             accountId,
+            email,
         });
         let customerId: string | undefined;
 
