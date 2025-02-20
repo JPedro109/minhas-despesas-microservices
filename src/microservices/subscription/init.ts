@@ -16,7 +16,7 @@ import {
     updatePaymentMethodTokenSchema,
     createSubscriptionSchema,
     getAccountSubscriptionSchema,
-    notifyUserOfSubscriptionPaymentFailureSchema,
+    notifyAccountOfSubscriptionPaymentFailureSchema,
     CreatePaymentMethodDTO,
     CreateSubscriptionDTO,
     DeletePaymentMethodDTO,
@@ -24,7 +24,7 @@ import {
     GetAccountSubscriptionDTO,
     GetAccountPaymentMethodDTO,
     GetAccountSubscriptionResponseDTO,
-    NotifyUserOfSubscriptionPaymentFailureDTO,
+    NotifyAccountOfSubscriptionPaymentFailureDTO,
     GetPlanResponseDTO,
     UpdatePaymentMethodNameDTO,
     UpdatePaymentMethodTokenDTO,
@@ -34,7 +34,7 @@ import {
     GetAccountPaymentMethodService,
     GetAccountSubscriptionService,
     GetPlansService,
-    NotifyUserOfSubscriptionPaymentFailureService,
+    NotifyAccountOfSubscriptionPaymentFailureService,
     UpdatePaymentMethodNameService,
     UpdatePaymentMethodTokenService,
 } from "./services";
@@ -208,15 +208,15 @@ export const handler = Middy.build([
         handler: async (event): Promise<void> => {
             const { customerId } = event.body;
 
-            const dto: NotifyUserOfSubscriptionPaymentFailureDTO = {
+            const dto: NotifyAccountOfSubscriptionPaymentFailureDTO = {
                 customerId,
             };
             Utils.validateRequestSchema(
                 dto,
-                notifyUserOfSubscriptionPaymentFailureSchema,
+                notifyAccountOfSubscriptionPaymentFailureSchema,
             );
 
-            await new NotifyUserOfSubscriptionPaymentFailureService(
+            await new NotifyAccountOfSubscriptionPaymentFailureService(
                 customerDAO,
                 accountDAO,
                 notification,

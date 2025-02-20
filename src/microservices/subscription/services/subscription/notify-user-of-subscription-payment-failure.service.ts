@@ -6,11 +6,11 @@ import {
     Notification,
 } from "../../infrastructure";
 
-export type NotifyUserOfSubscriptionPaymentFailureDTO = {
+export type NotifyAccountOfSubscriptionPaymentFailureDTO = {
     customerId: string;
 };
 
-export const notifyUserOfSubscriptionPaymentFailureSchema: RequestSchema = {
+export const notifyAccountOfSubscriptionPaymentFailureSchema: RequestSchema = {
     accountId: {
         type: "string",
         optional: false,
@@ -21,7 +21,7 @@ export const notifyUserOfSubscriptionPaymentFailureSchema: RequestSchema = {
     },
 };
 
-export class NotifyUserOfSubscriptionPaymentFailureService {
+export class NotifyAccountOfSubscriptionPaymentFailureService {
     constructor(
         private readonly customerDAO: CustomerDAO,
         private readonly accountDAO: AccountDAO,
@@ -30,7 +30,7 @@ export class NotifyUserOfSubscriptionPaymentFailureService {
 
     async execute({
         customerId,
-    }: NotifyUserOfSubscriptionPaymentFailureDTO): Promise<void> {
+    }: NotifyAccountOfSubscriptionPaymentFailureDTO): Promise<void> {
         const customer = await this.customerDAO.getCustomerById(customerId);
 
         if (!customer) {
