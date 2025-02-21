@@ -81,7 +81,7 @@ export class Dynamo {
     ): Promise<T[]> {
         const keyConditionExpression = ["#p = :pk"];
         const names = {
-            "#p": params.indexName ? params.indexName + "PK" : "PK",
+            "#p": params?.indexName ? params?.indexName + "PK" : "PK",
         };
         const values = { ":pk": pk };
 
@@ -89,7 +89,7 @@ export class Dynamo {
             keyConditionExpression.push(
                 params.skBeginsWith ? "begins_with(#s, :sk)" : "#s = :sk",
             );
-            names["#s"] = params.indexName ? params.indexName + "SK" : "SK";
+            names["#s"] = params?.indexName ? params?.indexName + "SK" : "SK";
             values[":sk"] = sk;
         }
 
