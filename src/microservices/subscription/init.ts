@@ -38,7 +38,7 @@ import {
     UpdatePaymentMethodNameService,
     UpdatePaymentMethodTokenService,
     UpdateSubscriptionRenewalStatusDTO,
-    UpdateSubscriptionRenewalStatusUseCase,
+    UpdateSubscriptionRenewalStatusService,
 } from "./services";
 
 const dynamo = new Dynamo("Subscription");
@@ -216,7 +216,7 @@ export const handler = Middy.build([
             };
             Utils.validateRequestSchema(dto, getAccountSubscriptionSchema);
 
-            await new UpdateSubscriptionRenewalStatusUseCase(
+            await new UpdateSubscriptionRenewalStatusService(
                 subscriptionDAO,
                 paymentMethodDAO,
                 payment,

@@ -21,7 +21,7 @@ export const updateSubscriptionRenewalSchema: RequestSchema = {
     },
 };
 
-export class UpdateSubscriptionRenewalStatusUseCase {
+export class UpdateSubscriptionRenewalStatusService {
     constructor(
         private readonly subscriptionDAO: SubscriptionDAO,
         private readonly paymentMethodDAO: PaymentMethodDAO,
