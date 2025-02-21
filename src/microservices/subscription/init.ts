@@ -57,7 +57,7 @@ export const handler = Middy.build([
         method: "POST",
         successStatusCode: 201,
         handler: async (event): Promise<string> => {
-            const { accountId, name, token } = event.body;
+            const { ["account_id"]: accountId, name, token } = event.body;
 
             const dto: CreatePaymentMethodDTO = {
                 accountId,
@@ -79,7 +79,7 @@ export const handler = Middy.build([
         method: "DELETE",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { accountId } = event.body;
+            const { ["account_id"]: accountId } = event.body;
 
             const dto: DeletePaymentMethodDTO = {
                 accountId,
@@ -100,7 +100,7 @@ export const handler = Middy.build([
         handler: async (
             event,
         ): Promise<GetAccountPaymentMethodResponseDTO | null> => {
-            const { accountId } = event.body;
+            const { ["account_id"]: accountId } = event.body;
 
             const dto: GetAccountPaymentMethodDTO = {
                 accountId,
@@ -118,7 +118,7 @@ export const handler = Middy.build([
         method: "PATCH",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { accountId, name } = event.body;
+            const { ["account_id"]: accountId, name } = event.body;
 
             const dto: UpdatePaymentMethodNameDTO = {
                 accountId,
@@ -136,7 +136,7 @@ export const handler = Middy.build([
         method: "PATCH",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { accountId, token } = event.body;
+            const { ["account_id"]: accountId, token } = event.body;
 
             const dto: UpdatePaymentMethodTokenDTO = {
                 accountId,
@@ -164,7 +164,7 @@ export const handler = Middy.build([
         method: "POST",
         successStatusCode: 201,
         handler: async (event): Promise<string> => {
-            const { accountId, planId } = event.body;
+            const { ["account_id"]: accountId, planId } = event.body;
 
             const dto: CreateSubscriptionDTO = {
                 accountId,
@@ -186,7 +186,7 @@ export const handler = Middy.build([
         method: "GET",
         successStatusCode: 200,
         handler: async (event): Promise<GetAccountSubscriptionResponseDTO> => {
-            const { accountId } = event.body;
+            const { ["account_id"]: accountId } = event.body;
 
             const dto: GetAccountSubscriptionDTO = {
                 accountId,
