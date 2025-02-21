@@ -49,7 +49,7 @@ export class CreateSubscriptionService {
         if (!plan) throw new NotFoundError("O plano não existe");
 
         const subscriptionExternalId = await this.payment.createSubscription(
-            customer.customerId,
+            customer.customerExternalId,
             plan.planExternalId,
             paymentMethod.token,
         );

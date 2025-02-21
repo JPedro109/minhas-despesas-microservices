@@ -57,7 +57,7 @@ export class CreatePaymentMethodService {
             await this.customerDAO.getCustomerByAccountId(accountId);
         const tokenCreated =
             await this.payment.attachmentPaymentMethodInCustomer(
-                customer.customerId,
+                customer.customerExternalId,
                 token,
             );
         try {
@@ -69,7 +69,7 @@ export class CreatePaymentMethodService {
                     token,
                 });
             await this.payment.payExpiredSubscriptionIfAny(
-                customer.customerId,
+                customer.customerExternalId,
                 tokenCreated,
             );
         } catch (e) {

@@ -3,12 +3,14 @@ import { Dynamo } from "@/shared";
 export type CustomerDynamoModel = {
     AccountId: string;
     CustomerId: string;
+    CustomerExternalId: string;
     CreatedAt: Date;
 };
 
 export type CustomerModel = {
     accountId: string;
     customerId: string;
+    customerExternalId: string;
     createdAt: Date;
 };
 
@@ -28,6 +30,7 @@ export class CustomerDAO {
                 Type: CustomerDAO.entity,
                 AccountId: data.accountId,
                 CustomerId: data.customerId,
+                CustomerExternalId: data.customerExternalId,
                 CreatedAt: new Date().toISOString(),
                 GSI1PK: `${CustomerDAO.entity}#${data.accountId}`,
                 GSI1SK: "DETAILS",
@@ -53,6 +56,7 @@ export class CustomerDAO {
         return {
             accountId: item[0].AccountId,
             customerId: item[0].CustomerId,
+            customerExternalId: item[0].CustomerExternalId,
             createdAt: item[0].CreatedAt,
         };
     }
@@ -71,6 +75,7 @@ export class CustomerDAO {
         return {
             accountId: item[0].AccountId,
             customerId: item[0].CustomerId,
+            customerExternalId: item[0].CustomerExternalId,
             createdAt: item[0].CreatedAt,
         };
     }

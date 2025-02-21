@@ -1,4 +1,4 @@
-import { RequestSchema } from "@/shared";
+import { RequestSchema, Utils } from "@/shared";
 import { AccountDAO, CustomerDAO, Payment } from "../../infrastructure";
 
 export type CreateAccountDTO = {
@@ -29,18 +29,19 @@ export class CreateAccountService {
             accountId,
             email,
         });
-        let customerId: string | undefined;
+        let customerExternalId: string | undefined;
 
         try {
-            customerId = await this.payment.createCustomer();
+            customerExternalId = await this.payment.createCustomer();
             await this.customerDAO.createCustomer({
                 accountId: databaseAccount.accountId,
-                customerId,
+                customerId: Utils.createUUID(),
+                customerExternalId,
             });
             return databaseAccount.accountId;
         } catch (e) {
-            if (customerId) {
-                await this.payment.deleteCustomer(customerId);
+            if (customerExternalId) {
+                await this.payment.deleteCustomer(customerExternalId);
             }
             await this.accountDAO.deleteAccountById(databaseAccount.accountId);
             throw e;
