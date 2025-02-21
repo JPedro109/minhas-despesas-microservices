@@ -37,6 +37,8 @@ import {
     NotifyAccountOfSubscriptionPaymentFailureService,
     UpdatePaymentMethodNameService,
     UpdatePaymentMethodTokenService,
+    UpdateSubscriptionRenewalStatusDTO,
+    UpdateSubscriptionRenewalStatusUseCase,
 } from "./services";
 
 const dynamo = new Dynamo("Subscription");
@@ -197,6 +199,26 @@ export const handler = Middy.build([
                 accountDAO,
                 subscriptionDAO,
                 planDAO,
+                payment,
+            ).execute(dto);
+        },
+    },
+    {
+        path: "/subscriptions/renewal",
+        method: "PATCH",
+        successStatusCode: 204,
+        handler: async (event): Promise<void> => {
+            const { ["account_id"]: accountId, renewable } = event.body;
+
+            const dto: UpdateSubscriptionRenewalStatusDTO = {
+                accountId,
+                renewable,
+            };
+            Utils.validateRequestSchema(dto, getAccountSubscriptionSchema);
+
+            await new UpdateSubscriptionRenewalStatusUseCase(
+                subscriptionDAO,
+                paymentMethodDAO,
                 payment,
             ).execute(dto);
         },
