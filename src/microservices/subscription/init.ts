@@ -59,10 +59,12 @@ export const handler = Middy.build([
         method: "POST",
         successStatusCode: 201,
         handler: async (event): Promise<string> => {
-            const { ["account_id"]: accountId, name, token } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
+            const { name, token } = event.body;
 
             const dto: CreatePaymentMethodDTO = {
-                accountId,
+                accountId: accountId as string,
                 name,
                 token,
             };
@@ -81,10 +83,11 @@ export const handler = Middy.build([
         method: "DELETE",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { ["account_id"]: accountId } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
 
             const dto: DeletePaymentMethodDTO = {
-                accountId,
+                accountId: accountId as string,
             };
             Utils.validateRequestSchema(dto, deletePaymentMethodSchema);
 
@@ -102,10 +105,11 @@ export const handler = Middy.build([
         handler: async (
             event,
         ): Promise<GetAccountPaymentMethodResponseDTO | null> => {
-            const { ["account_id"]: accountId } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
 
             const dto: GetAccountPaymentMethodDTO = {
-                accountId,
+                accountId: accountId as string,
             };
             Utils.validateRequestSchema(dto, getAccountPaymentMethodSchema);
 
@@ -120,10 +124,12 @@ export const handler = Middy.build([
         method: "PATCH",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { ["account_id"]: accountId, name } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
+            const { name } = event.body;
 
             const dto: UpdatePaymentMethodNameDTO = {
-                accountId,
+                accountId: accountId as string,
                 name,
             };
             Utils.validateRequestSchema(dto, updatePaymentMethodNameSchema);
@@ -138,10 +144,12 @@ export const handler = Middy.build([
         method: "PATCH",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { ["account_id"]: accountId, token } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
+            const { token } = event.body;
 
             const dto: UpdatePaymentMethodTokenDTO = {
-                accountId,
+                accountId: accountId as string,
                 token,
             };
             Utils.validateRequestSchema(dto, updatePaymentMethodTokenSchema);
@@ -166,10 +174,12 @@ export const handler = Middy.build([
         method: "POST",
         successStatusCode: 201,
         handler: async (event): Promise<string> => {
-            const { ["account_id"]: accountId, planId } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
+            const { planId } = event.body;
 
             const dto: CreateSubscriptionDTO = {
-                accountId,
+                accountId: accountId as string,
                 planId,
             };
             Utils.validateRequestSchema(dto, createSubscriptionSchema);
@@ -188,10 +198,11 @@ export const handler = Middy.build([
         method: "GET",
         successStatusCode: 200,
         handler: async (event): Promise<GetAccountSubscriptionResponseDTO> => {
-            const { ["account_id"]: accountId } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
 
             const dto: GetAccountSubscriptionDTO = {
-                accountId,
+                accountId: accountId as string,
             };
             Utils.validateRequestSchema(dto, getAccountSubscriptionSchema);
 
@@ -208,10 +219,12 @@ export const handler = Middy.build([
         method: "PATCH",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { ["account_id"]: accountId, renewable } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
+            const { renewable } = event.body;
 
             const dto: UpdateSubscriptionRenewalStatusDTO = {
-                accountId,
+                accountId: accountId as string,
                 renewable,
             };
             Utils.validateRequestSchema(dto, getAccountSubscriptionSchema);
