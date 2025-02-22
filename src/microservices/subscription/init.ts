@@ -240,6 +240,7 @@ export const handler = Middy.build([
         path: "/subscriptions/webhook",
         method: "POST",
         successStatusCode: 204,
+        doNotParseJsonBody: true,
         handler: async (event): Promise<void> => {
             const payload = payment.validateWebhookRequest<{
                 type: string;
