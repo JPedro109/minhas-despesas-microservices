@@ -15,10 +15,6 @@ export const notifyAccountOfSubscriptionPaymentFailureSchema: RequestSchema = {
         type: "string",
         optional: false,
     },
-    email: {
-        type: "string",
-        optional: false,
-    },
 };
 
 export class NotifyAccountOfSubscriptionPaymentFailureService {
