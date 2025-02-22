@@ -30,7 +30,7 @@ export class NotifyAccountOfSubscriptionPaymentFailureService {
         const customer = await this.customerDAO.getCustomerById(customerId);
 
         if (!customer) {
-            throw new NotFoundError("O cliente não existe não existe");
+            throw new NotFoundError("O cliente não existe");
         }
 
         const account = await this.accountDAO.getAccountById(
