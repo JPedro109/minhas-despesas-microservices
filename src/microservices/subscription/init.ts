@@ -241,21 +241,28 @@ export const handler = Middy.build([
         method: "POST",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { customerId } = event.body;
+            const payload = payment.validateWebhookRequest<{
+                type: string;
+                data: { object: { customer: string } };
+            }>(event.body, event.headers["stripe-signature"]);
+
+            const { type, data } = payload;
 
             const dto: NotifyAccountOfSubscriptionPaymentFailureDTO = {
-                customerId,
+                customerId: data.object.customer,
             };
             Utils.validateRequestSchema(
                 dto,
                 notifyAccountOfSubscriptionPaymentFailureSchema,
             );
 
-            await new NotifyAccountOfSubscriptionPaymentFailureService(
-                customerDAO,
-                accountDAO,
-                notification,
-            ).execute(dto);
+            if (type === "invoice.payment_failed") {
+                await new NotifyAccountOfSubscriptionPaymentFailureService(
+                    customerDAO,
+                    accountDAO,
+                    notification,
+                ).execute(dto);
+            }
         },
     },
 ]);
