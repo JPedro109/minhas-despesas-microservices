@@ -27,7 +27,7 @@ export class SubscriptionDAO {
     ): Promise<SubscriptionModel> {
         await this.dynamo.create(
             `${this.fatherEntity}#${data.accountId}`,
-            `${SubscriptionDAO.entity}#${data.accountId}`,
+            `${SubscriptionDAO.entity}#${data.subscriptionId}`,
             {
                 Type: SubscriptionDAO.entity,
                 AccountId: data.accountId,

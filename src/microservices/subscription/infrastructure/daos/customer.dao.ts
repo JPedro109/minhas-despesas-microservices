@@ -25,7 +25,7 @@ export class CustomerDAO {
     ): Promise<CustomerModel> {
         await this.dynamo.create(
             `${this.fatherEntity}#${data.accountId}`,
-            `${CustomerDAO.entity}#${data.accountId}`,
+            `${CustomerDAO.entity}#${data.customerId}`,
             {
                 Type: CustomerDAO.entity,
                 AccountId: data.accountId,
