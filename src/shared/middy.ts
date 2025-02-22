@@ -34,6 +34,7 @@ type Route = {
     path: string;
     method: HttpMethod;
     handler: Handler;
+    doNotParseJsonBody?: boolean;
 };
 type MiddyHandler = middy.MiddyfiedHandler<unknown, unknown>;
 
@@ -42,7 +43,11 @@ export class Middy {
         const handlers = routes.map((route) => ({
             method: route.method,
             path: route.path,
-            handler: Middy.makeHandler(route.handler, route.successStatusCode),
+            handler: Middy.makeHandler(
+                route.handler,
+                route.successStatusCode,
+                route.doNotParseJsonBody,
+            ),
         }));
 
         return middy().handler(httpRouter(handlers));
@@ -51,9 +56,17 @@ export class Middy {
     private static makeHandler(
         handler: Handler,
         successStatusCode: number,
+        doNotParseJsonBody?: boolean,
     ): MiddyHandler {
-        return middy()
-            .use(httpJsonBodyParser({ disableContentTypeError: true }))
+        const middyHandler = doNotParseJsonBody
+            ? middy()
+            : middy().use(
+                  httpJsonBodyParser({
+                      disableContentTypeError: true,
+                  }),
+              );
+
+        return middyHandler
             .use(Middy.middleware(successStatusCode))
             .use(
                 httpResponseSerializer({

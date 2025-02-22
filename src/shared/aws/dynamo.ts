@@ -73,17 +73,23 @@ export class Dynamo {
     async get<T>(
         pk: string,
         sk?: string,
-        params?: { skBeginsWith?: boolean; filters?: Filter[] },
+        params?: {
+            skBeginsWith?: boolean;
+            indexName?: string;
+            filters?: Filter[];
+        },
     ): Promise<T[]> {
         const keyConditionExpression = ["#p = :pk"];
-        const names = { "#p": "PK" };
+        const names = {
+            "#p": params?.indexName ? params?.indexName + "PK" : "PK",
+        };
         const values = { ":pk": pk };
 
         if (sk) {
             keyConditionExpression.push(
                 params.skBeginsWith ? "begins_with(#s, :sk)" : "#s = :sk",
             );
-            names["#s"] = "SK";
+            names["#s"] = params?.indexName ? params?.indexName + "SK" : "SK";
             values[":sk"] = sk;
         }
 
@@ -112,6 +118,7 @@ export class Dynamo {
                 : null,
             ExpressionAttributeNames: names,
             ExpressionAttributeValues: values,
+            IndexName: params?.indexName,
         });
 
         const { Items } = await this.dynamo.send(command);

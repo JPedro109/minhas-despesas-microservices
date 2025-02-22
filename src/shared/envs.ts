@@ -8,6 +8,10 @@ type EnvironmentVariables = {
     awsCognitoClientId: string;
     awsCognitoClientSecret: string;
     awsCognitoUserPoolId: string;
+    localstackEndpoint: string;
+    stripeSecretKey: string;
+    webhookSecret: string;
+    sendEmailQueue: string;
 };
 
 export const envs: EnvironmentVariables = {
@@ -18,4 +22,8 @@ export const envs: EnvironmentVariables = {
     awsCognitoClientId: process.env.AWS_COGNITO_CLIENT_ID,
     awsCognitoClientSecret: process.env.AWS_COGNITO_CLIENT_SECRET,
     awsCognitoUserPoolId: process.env.AWS_COGNITO_USER_POOL_ID,
+    localstackEndpoint: process.env.LOCALSTACK_ENDPOINT,
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    webhookSecret: process.env.WEBHOOK_SECRET,
+    sendEmailQueue: process.env.SEND_EMAIL_QUEUE,
 };
