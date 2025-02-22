@@ -237,7 +237,7 @@ export const handler = Middy.build([
         },
     },
     {
-        path: "/subscriptions/notify-payment-failed",
+        path: "/subscriptions/webhook",
         method: "POST",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
