@@ -29,7 +29,7 @@ export class PaymentMethodDAO {
     ): Promise<PaymentMethodModel> {
         await this.dynamo.create(
             `${this.fatherEntity}#${data.accountId}`,
-            `${PaymentMethodDAO.entity}#${data.accountId}`,
+            `${PaymentMethodDAO.entity}#${data.paymentMethodId}`,
             {
                 Type: PaymentMethodDAO.entity,
                 AccountId: data.accountId,
