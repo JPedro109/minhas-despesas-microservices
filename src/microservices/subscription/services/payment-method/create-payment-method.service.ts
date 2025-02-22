@@ -66,7 +66,7 @@ export class CreatePaymentMethodService {
                     accountId,
                     paymentMethodId: Utils.createUUID(),
                     name,
-                    token,
+                    token: tokenCreated,
                 });
             await this.payment.payExpiredSubscriptionIfAny(
                 customer.customerExternalId,
