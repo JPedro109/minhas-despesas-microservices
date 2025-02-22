@@ -11,7 +11,7 @@ export type NotifyAccountOfSubscriptionPaymentFailureDTO = {
 };
 
 export const notifyAccountOfSubscriptionPaymentFailureSchema: RequestSchema = {
-    accountId: {
+    customerId: {
         type: "string",
         optional: false,
     },
