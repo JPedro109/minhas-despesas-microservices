@@ -1,9 +1,20 @@
-import { NotFoundError, Utils } from "@/shared";
+import { NotFoundError, RequestSchema, Utils } from "@/shared";
 import { ExpenseDAO, PaymentHistoryDAO } from "../../infrastructure";
 
 export type PayExpenseDTO = {
     accountId: string;
     expenseId: string;
+};
+
+export const payExpenseSchema: RequestSchema = {
+    accountId: {
+        type: "string",
+        optional: false,
+    },
+    expenseId: {
+        type: "string",
+        optional: false,
+    },
 };
 
 export class PayExpenseService {

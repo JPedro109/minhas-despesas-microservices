@@ -8,7 +8,7 @@ export type CreateExpenseDTO = {
     expenseDueDate: Date;
 };
 
-export const createAccountSchema: RequestSchema = {
+export const createExpenseSchema: RequestSchema = {
     accountId: {
         type: "string",
         optional: false,

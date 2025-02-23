@@ -1,10 +1,25 @@
-import { NotFoundError } from "@/shared";
+import { NotFoundError, RequestSchema } from "@/shared";
 import { ExpenseDAO, PaymentHistoryDAO } from "../../infrastructure";
 
 export type DeleteExpenseDTO = {
     accountId: string;
     expenseId: string;
     deleteExpensePaymentHistory: boolean;
+};
+
+export const deleteExpenseSchema: RequestSchema = {
+    accountId: {
+        type: "string",
+        optional: false,
+    },
+    expenseId: {
+        type: "string",
+        optional: false,
+    },
+    deleteExpensePaymentHistory: {
+        type: "boolean",
+        optional: false,
+    },
 };
 
 export class DeleteExpenseService {

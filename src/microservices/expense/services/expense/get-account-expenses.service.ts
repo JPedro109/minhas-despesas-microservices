@@ -1,4 +1,4 @@
-import { NotFoundError } from "@/shared";
+import { NotFoundError, RequestSchema } from "@/shared";
 import { AccountDAO, ExpenseDAO } from "../../infrastructure";
 
 export type GetAccountExpensesDTO = {
@@ -12,6 +12,13 @@ export type GetAccountExpensesResponseDTO = {
     expenseValue: number;
     dueDate: Date;
     paid: boolean;
+};
+
+export const getAccountExpensesSchema: RequestSchema = {
+    accountId: {
+        type: "string",
+        optional: false,
+    },
 };
 
 export class GetAccountExpensesService {

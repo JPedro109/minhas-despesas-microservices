@@ -1,4 +1,4 @@
-import { NotFoundError } from "@/shared";
+import { NotFoundError, RequestSchema } from "@/shared";
 import { ExpenseDAO } from "../../infrastructure";
 
 export type UpdateExpenseDTO = {
@@ -6,7 +6,30 @@ export type UpdateExpenseDTO = {
     expenseId: string;
     expenseName: string;
     expenseValue: number;
-    dueDate: Date;
+    expenseDueDate: Date;
+};
+
+export const updateExpenseSchema: RequestSchema = {
+    accountId: {
+        type: "string",
+        optional: false,
+    },
+    expenseId: {
+        type: "string",
+        optional: false,
+    },
+    expenseName: {
+        type: "string",
+        optional: false,
+    },
+    expenseValue: {
+        type: "string",
+        optional: false,
+    },
+    expenseDueDate: {
+        type: "date",
+        optional: false,
+    },
 };
 
 export class UpdateExpenseService {
@@ -17,7 +40,7 @@ export class UpdateExpenseService {
         expenseId,
         expenseName,
         expenseValue,
-        dueDate,
+        expenseDueDate,
     }: UpdateExpenseDTO): Promise<void> {
         const expense =
             await this.expenseDAO.getExpensesByAccountIdAndExpenseId(
@@ -30,7 +53,7 @@ export class UpdateExpenseService {
 
         expense.expenseName = expenseName;
         expense.expenseValue = expenseValue;
-        expense.expenseDueDate = dueDate;
+        expense.expenseDueDate = expenseDueDate;
 
         await this.expenseDAO.updateExpenseByAccountIdAndExpenseId(
             accountId,
