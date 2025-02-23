@@ -59,27 +59,28 @@ export class PaymentHistoryDAO {
     async getPaymentHistoryByExpenseIdAndExpenseDueDate(
         expenseId: string,
         expenseDueDate: Date,
-    ): Promise<PaymentHistoryModel[]> {
+    ): Promise<PaymentHistoryModel | null> {
         const items = await this.dynamo.get<PaymentHistoryDynamoModel>(
             `${ExpenseDAO.entity}#${expenseId}`,
             `${PaymentHistoryDAO.entity}#${expenseDueDate.toISOString()}#`,
             {
                 skBeginsWith: true,
+                indexName: "GSI1",
             },
         );
 
-        if (!items.length) return [];
+        if (!items.length) return null;
 
-        return items.map((item) => ({
-            accountId: item.AccountId,
-            expenseId: item.ExpenseId,
-            paymentHistoryId: item.PaymentHistoryId,
-            expenseName: item.ExpenseName,
-            expenseValue: item.ExpenseValue,
-            expenseDueDate: item.ExpenseDueDate,
-            paymentDate: item.PaymentDate,
-            createdAt: item.CreatedAt,
-        }));
+        return {
+            accountId: items[0].AccountId,
+            expenseId: items[0].ExpenseId,
+            paymentHistoryId: items[0].PaymentHistoryId,
+            expenseName: items[0].ExpenseName,
+            expenseValue: items[0].ExpenseValue,
+            expenseDueDate: items[0].ExpenseDueDate,
+            paymentDate: items[0].PaymentDate,
+            createdAt: items[0].CreatedAt,
+        };
     }
 
     async getPaymentHistoryByAccountIdAndPaymentHistoryId(
