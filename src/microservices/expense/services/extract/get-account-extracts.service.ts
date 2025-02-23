@@ -1,4 +1,4 @@
-import { NotFoundError } from "@/shared";
+import { NotFoundError, RequestSchema } from "@/shared";
 import { AccountDAO, ExtractDAO } from "../../infrastructure";
 
 export type GetUserExtractsDTO = {
@@ -11,6 +11,13 @@ export type GetUserExtractsResponseDTO = {
     accountId: string;
     expiryDate: Date;
     urlExpiryDate: Date;
+};
+
+export const createExtractSchema: RequestSchema = {
+    accountId: {
+        type: "string",
+        optional: false,
+    },
 };
 
 export class GetUserExtractsService {

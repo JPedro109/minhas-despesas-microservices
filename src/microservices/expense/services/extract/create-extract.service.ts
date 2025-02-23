@@ -1,4 +1,4 @@
-import { ForbiddenError, NotFoundError, Utils } from "@/shared";
+import { ForbiddenError, NotFoundError, RequestSchema, Utils } from "@/shared";
 import {
     AccountDAO,
     ExtractDAO,
@@ -11,6 +11,21 @@ export type CreateExtractDTO = {
     accountId: string;
     referenceMonth: number;
     referenceYear: number;
+};
+
+export const createExtractSchema: RequestSchema = {
+    accountId: {
+        type: "string",
+        optional: false,
+    },
+    referenceMonth: {
+        type: "number",
+        optional: false,
+    },
+    referenceYear: {
+        type: "number",
+        optional: false,
+    },
 };
 
 export class CreateExtractService {
