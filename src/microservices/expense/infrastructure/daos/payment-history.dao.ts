@@ -151,6 +151,10 @@ export class PaymentHistoryDAO {
         }));
     }
 
+    async deletePaymentHistoriesByAccountId(accountId: string): Promise<void> {
+        await this.dynamo.deletePartion(`${this.fatherEntity}#${accountId}`);
+    }
+
     async deletePaymentHistoryByAccountIdAndPaymentHistoryId(
         accountId: string,
         paymentHistoryId: string,
