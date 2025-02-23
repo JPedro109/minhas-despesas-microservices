@@ -13,7 +13,7 @@ export type CreateExtractDTO = {
     referenceYear: number;
 };
 
-export class CreateExtractUseCase {
+export class CreateExtractService {
     constructor(
         private readonly accountDAO: AccountDAO,
         private readonly paymentHistoryDAO: PaymentHistoryDAO,

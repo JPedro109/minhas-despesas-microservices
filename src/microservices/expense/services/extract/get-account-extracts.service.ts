@@ -13,7 +13,7 @@ export type GetUserExtractsResponseDTO = {
     urlExpiryDate: Date;
 };
 
-export class GetUserExtractsUseCase {
+export class GetUserExtractsService {
     constructor(
         private readonly accountDAO: AccountDAO,
         private readonly extractDAO: ExtractDAO,
