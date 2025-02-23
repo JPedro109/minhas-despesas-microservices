@@ -12,6 +12,7 @@ type EnvironmentVariables = {
     stripeSecretKey: string;
     webhookSecret: string;
     sendEmailQueue: string;
+    awsBucketName: string;
 };
 
 export const envs: EnvironmentVariables = {
@@ -26,4 +27,5 @@ export const envs: EnvironmentVariables = {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     webhookSecret: process.env.WEBHOOK_SECRET,
     sendEmailQueue: process.env.SEND_EMAIL_QUEUE,
+    awsBucketName: process.env.AWS_BUCKET_NAME,
 };
