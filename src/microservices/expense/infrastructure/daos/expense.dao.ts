@@ -43,6 +43,8 @@ export class ExpenseDAO {
                 ExpenseDueDate: data.expenseDueDate,
                 Paid: data.paid,
                 CreatedAt: new Date().toISOString(),
+                GSI1PK: "EXPENSES",
+                GSI1SK: data.expenseId,
             },
         );
 
