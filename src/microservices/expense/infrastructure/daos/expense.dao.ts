@@ -77,6 +77,56 @@ export class ExpenseDAO {
         }));
     }
 
+    async getExpensesByExpenseDueYearAndExpenseDueMonthAndPaymentStatus(
+        expenseDueYear: number,
+        expenseDueMonth: number,
+        paymentStatus: boolean,
+    ): Promise<ExpenseModel[]> {
+        const items = await this.dynamo.get<ExpenseDynamoModel>(
+            "EXPENSES",
+            null,
+            {
+                filters: [
+                    {
+                        column: "ExpenseDueDate",
+                        expression: ">=",
+                        value: new Date(
+                            expenseDueYear,
+                            expenseDueMonth,
+                        ).toISOString(),
+                    },
+                    {
+                        column: "ExpenseDueDate",
+                        expression: "<=",
+                        value: new Date(
+                            expenseDueYear,
+                            expenseDueMonth,
+                            0,
+                        ).toISOString(),
+                    },
+                    {
+                        column: "Paid",
+                        expression: "=",
+                        value: paymentStatus,
+                    },
+                ],
+            },
+        );
+
+        if (!items) return null;
+
+        return items.map((item) => ({
+            accountId: item.AccountId,
+            expenseId: item.ExpenseId,
+            expenseName: item.ExpenseName,
+            expenseValue: item.ExpenseValue,
+            expenseDueDate: item.ExpenseDueDate,
+            paid: item.Paid,
+            createdAt: item.CreatedAt,
+            updatedAt: item.UpdatedAt,
+        }));
+    }
+
     async getExpensesByAccountIdAndExpenseId(
         accountId: string,
         expenseId: string,
@@ -115,6 +165,22 @@ export class ExpenseDAO {
                 Paid: data.paid,
                 UpdatedAt: new Date().toISOString(),
             },
+        );
+    }
+
+    async updateExpensesByAccountIdAndExpenseId(
+        datas: {
+            accountId: string;
+            expenseId: string;
+            data: ExpenseModel;
+        }[],
+    ): Promise<void> {
+        await this.dynamo.updateMany(
+            datas.map((x) => ({
+                pk: `${this.fatherEntity}#${x.accountId}`,
+                sk: `${ExpenseDAO.entity}#${x.expenseId}`,
+                data: x,
+            })),
         );
     }
 
