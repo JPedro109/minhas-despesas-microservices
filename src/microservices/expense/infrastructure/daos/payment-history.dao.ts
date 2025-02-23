@@ -153,7 +153,11 @@ export class PaymentHistoryDAO {
     }
 
     async deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void> {
-        await this.dynamo.deletePartion(`${this.fatherEntity}#${expenseId}`);
+        await this.dynamo.deleteSubPartion(
+            `${this.fatherEntity}#${expenseId}`,
+            `${PaymentHistoryDAO.entity}#`,
+            "GS1",
+        );
     }
 
     async deletePaymentHistoryByAccountIdAndPaymentHistoryId(
