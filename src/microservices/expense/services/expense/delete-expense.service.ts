@@ -49,7 +49,7 @@ export class DeleteExpenseService {
 
         try {
             if (deleteExpensePaymentHistory) {
-                await this.paymentHistoryDAO.deletePaymentHistoriesByAccountId(
+                await this.paymentHistoryDAO.deletePaymentHistoriesByExpenseId(
                     accountId,
                 );
             }
