@@ -9,7 +9,7 @@ export type UpdateExpenseDTO = {
     dueDate: Date;
 };
 
-export class UpdateExpenseUseCase {
+export class UpdateExpenseService {
     constructor(private readonly expenseDAO: ExpenseDAO) {}
 
     async execute({

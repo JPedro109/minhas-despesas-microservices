@@ -14,7 +14,7 @@ export type GetAccountExpensesResponseDTO = {
     paid: boolean;
 };
 
-export class GetAccountExpensesUseCase {
+export class GetAccountExpensesService {
     constructor(
         private readonly accountDAO: AccountDAO,
         private readonly expenseDAO: ExpenseDAO,

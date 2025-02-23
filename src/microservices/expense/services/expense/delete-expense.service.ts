@@ -7,7 +7,7 @@ export type DeleteExpenseDTO = {
     deleteExpensePaymentHistory: boolean;
 };
 
-export class DeleteExpenseUseCase {
+export class DeleteExpenseService {
     constructor(
         private readonly expenseDAO: ExpenseDAO,
         private readonly paymentHistoryDAO: PaymentHistoryDAO,
