@@ -3,6 +3,7 @@ import { Dynamo } from "@/shared";
 export type ExtractDynamoModel = {
     AccountId: string;
     ExtractId: string;
+    Url: string;
     ReferenceYear: number;
     ReferenceMonth: number;
     ExpiryDate: Date;
@@ -13,6 +14,7 @@ export type ExtractDynamoModel = {
 export type ExtractModel = {
     accountId: string;
     extractId: string;
+    url: string;
     referenceYear: number;
     referenceMonth: number;
     expiryDate: Date;
@@ -63,6 +65,7 @@ export class ExtractDAO {
         return items.map((item) => ({
             accountId: item.AccountId,
             extractId: item.ExtractId,
+            url: item.Url,
             referenceMonth: item.ReferenceMonth,
             referenceYear: item.ReferenceYear,
             urlExpiryDate: item.UrlExpiryDate,
@@ -85,6 +88,7 @@ export class ExtractDAO {
         return {
             accountId: item.AccountId,
             extractId: item.ExtractId,
+            url: item.Url,
             referenceMonth: item.ReferenceMonth,
             referenceYear: item.ReferenceYear,
             urlExpiryDate: item.UrlExpiryDate,
