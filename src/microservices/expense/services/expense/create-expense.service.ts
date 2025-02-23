@@ -42,7 +42,8 @@ export class CreateExpenseService {
         const accountExists = await this.accountDAO.getAccountById(accountId);
         if (!accountExists) throw new NotFoundError("A conta não existe");
 
-        const expenses = await this.expenseDAO.getExpenseByAccountId(accountId);
+        const expenses =
+            await this.expenseDAO.getExpensesByAccountId(accountId);
         if (expenses.length === 10) {
             throw new ForbiddenError(
                 "Você atingiu o número máximo de despesas que podem ser criadas",

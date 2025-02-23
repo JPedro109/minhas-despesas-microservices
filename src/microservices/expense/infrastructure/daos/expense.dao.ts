@@ -48,13 +48,13 @@ export class ExpenseDAO {
             },
         );
 
-        return await this.getExpenseByAccountIdAndExpenseId(
+        return await this.getExpensesByAccountIdAndExpenseId(
             data.accountId,
             data.expenseId,
         );
     }
 
-    async getExpenseByAccountId(accountId: string): Promise<ExpenseModel[]> {
+    async getExpensesByAccountId(accountId: string): Promise<ExpenseModel[]> {
         const items = await this.dynamo.get<ExpenseDynamoModel>(
             `${this.fatherEntity}#${accountId}`,
             `${ExpenseDAO.entity}#`,
@@ -77,7 +77,7 @@ export class ExpenseDAO {
         }));
     }
 
-    async getExpenseByAccountIdAndExpenseId(
+    async getExpensesByAccountIdAndExpenseId(
         accountId: string,
         expenseId: string,
     ): Promise<ExpenseModel | null> {
