@@ -241,4 +241,39 @@ export class Dynamo {
 
         await Promise.all(comands);
     }
+
+    async deleteSubPartion(
+        pk: string,
+        sk: string,
+        indexName?: string,
+    ): Promise<void> {
+        const transactItems = [];
+        const items = await this.get<{ PK: string; SK: string }>(pk, sk, {
+            skBeginsWith: true,
+            indexName,
+        });
+
+        for (const item of items) {
+            const command = {
+                TableName: this.tableName,
+                Key: {
+                    PK: item.PK,
+                    SK: item.SK,
+                },
+            };
+
+            transactItems.push({ Delete: command });
+        }
+
+        const comands = [];
+        const size = 100;
+        for (let i = 0; i < transactItems.length; i += size) {
+            const command = new TransactWriteCommand({
+                TransactItems: transactItems.slice(i, i + size),
+            });
+            comands.push(this.dynamo.send(command));
+        }
+
+        await Promise.all(comands);
+    }
 }
