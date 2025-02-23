@@ -43,13 +43,13 @@ export class ExtractDAO {
             },
         );
 
-        return await this.getExtractByAccountIdAndExtractId(
+        return await this.getExtractsByAccountIdAndExtractId(
             data.accountId,
             data.extractId,
         );
     }
 
-    async getExtractByAccountId(accountId: string): Promise<ExtractModel[]> {
+    async getExtractsByAccountId(accountId: string): Promise<ExtractModel[]> {
         const items = await this.dynamo.get<ExtractDynamoModel>(
             `${this.fatherEntity}#${accountId}`,
             `${ExtractDAO.entity}#`,
@@ -71,7 +71,7 @@ export class ExtractDAO {
         }));
     }
 
-    async getExtractByAccountIdAndExtractId(
+    async getExtractsByAccountIdAndExtractId(
         accountId: string,
         expenseId: string,
     ): Promise<ExtractModel | null> {
