@@ -24,11 +24,10 @@ export class PayExpenseService {
     ) {}
 
     async execute({ accountId, expenseId }: PayExpenseDTO): Promise<void> {
-        const expense =
-            await this.expenseDAO.getExpensesByAccountIdAndExpenseId(
-                accountId,
-                expenseId,
-            );
+        const expense = await this.expenseDAO.getExpenseByAccountIdAndExpenseId(
+            accountId,
+            expenseId,
+        );
         if (!expense) {
             throw new NotFoundError("Essa despesa não existe");
         }

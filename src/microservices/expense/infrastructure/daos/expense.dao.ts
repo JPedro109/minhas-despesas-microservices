@@ -48,7 +48,7 @@ export class ExpenseDAO {
             },
         );
 
-        return await this.getExpensesByAccountIdAndExpenseId(
+        return await this.getExpenseByAccountIdAndExpenseId(
             data.accountId,
             data.expenseId,
         );
@@ -127,7 +127,7 @@ export class ExpenseDAO {
         }));
     }
 
-    async getExpensesByAccountIdAndExpenseId(
+    async getExpenseByAccountIdAndExpenseId(
         accountId: string,
         expenseId: string,
     ): Promise<ExpenseModel | null> {
