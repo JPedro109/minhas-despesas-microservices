@@ -13,7 +13,7 @@ export type GetUserExtractsResponseDTO = {
     urlExpiryDate: Date;
 };
 
-export const createExtractSchema: RequestSchema = {
+export const getAccountExtractsSchema: RequestSchema = {
     accountId: {
         type: "string",
         optional: false,
