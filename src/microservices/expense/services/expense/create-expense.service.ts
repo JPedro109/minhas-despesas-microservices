@@ -18,7 +18,7 @@ export const createExpenseSchema: RequestSchema = {
         optional: false,
     },
     expenseValue: {
-        type: "string",
+        type: "number",
         optional: false,
     },
     expenseDueDate: {
