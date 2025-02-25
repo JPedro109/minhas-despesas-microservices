@@ -40,7 +40,7 @@ export class ExpenseDAO {
                 ExpenseId: data.expenseId,
                 ExpenseName: data.expenseName,
                 ExpenseValue: data.expenseValue,
-                ExpenseDueDate: data.expenseDueDate,
+                ExpenseDueDate: data.expenseDueDate.toISOString(),
                 Paid: data.paid,
                 CreatedAt: new Date().toISOString(),
                 GSI1PK: "EXPENSES",
