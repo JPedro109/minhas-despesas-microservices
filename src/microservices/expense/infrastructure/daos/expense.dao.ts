@@ -161,7 +161,7 @@ export class ExpenseDAO {
             {
                 ExpenseName: data.expenseName,
                 ExpenseValue: data.expenseValue,
-                ExpenseDueDate: data.expenseDueDate,
+                ExpenseDueDate: data.expenseDueDate.toISOString(),
                 Paid: data.paid,
                 UpdatedAt: new Date().toISOString(),
             },
