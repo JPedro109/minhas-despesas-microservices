@@ -39,8 +39,8 @@ export class ExtractDAO {
                 ExtractId: data.extractId,
                 ReferenceMonth: data.referenceMonth,
                 ReferenceYear: data.referenceYear,
-                UrlExpiryDate: data.urlExpiryDate,
-                ExpiryDate: data.expiryDate,
+                UrlExpiryDate: data.urlExpiryDate.toISOString(),
+                ExpiryDate: data.expiryDate.toISOString(),
                 CreatedAt: new Date().toISOString(),
             },
         );
@@ -68,8 +68,8 @@ export class ExtractDAO {
             url: item.Url,
             referenceMonth: item.ReferenceMonth,
             referenceYear: item.ReferenceYear,
-            urlExpiryDate: item.UrlExpiryDate,
-            expiryDate: item.ExpiryDate,
+            urlExpiryDate: new Date(item.UrlExpiryDate),
+            expiryDate: new Date(item.ExpiryDate),
             createdAt: new Date(item.CreatedAt),
         }));
     }
@@ -91,8 +91,8 @@ export class ExtractDAO {
             url: item.Url,
             referenceMonth: item.ReferenceMonth,
             referenceYear: item.ReferenceYear,
-            urlExpiryDate: item.UrlExpiryDate,
-            expiryDate: item.ExpiryDate,
+            urlExpiryDate: new Date(item.UrlExpiryDate),
+            expiryDate: new Date(item.ExpiryDate),
             createdAt: new Date(item.CreatedAt),
         };
     }
