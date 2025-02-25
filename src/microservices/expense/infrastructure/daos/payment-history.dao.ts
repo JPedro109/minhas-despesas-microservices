@@ -138,7 +138,7 @@ export class PaymentHistoryDAO {
             },
         );
 
-        if (!items) return null;
+        if (!items.length) return [];
 
         return items.map((item) => ({
             accountId: item.AccountId,
