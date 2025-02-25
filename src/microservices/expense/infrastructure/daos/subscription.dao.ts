@@ -56,8 +56,8 @@ export class SubscriptionDAO {
             accountId: item[0].AccountId,
             subscriptionId: item[0].SubscriptionId,
             active: item[0].Active,
-            createdAt: item[0].CreatedAt,
-            updatedAt: item[0].UpdatedAt,
+            createdAt: new Date(item[0].CreatedAt),
+            updatedAt: item[0].UpdatedAt ? new Date(item[0].UpdatedAt) : null,
         };
     }
 

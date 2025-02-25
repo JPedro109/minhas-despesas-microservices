@@ -57,7 +57,7 @@ export class CustomerDAO {
             accountId: item[0].AccountId,
             customerId: item[0].CustomerId,
             customerExternalId: item[0].CustomerExternalId,
-            createdAt: item[0].CreatedAt,
+            createdAt: new Date(item[0].CreatedAt),
         };
     }
 
@@ -76,7 +76,7 @@ export class CustomerDAO {
             accountId: item[0].AccountId,
             customerId: item[0].CustomerId,
             customerExternalId: item[0].CustomerExternalId,
-            createdAt: item[0].CreatedAt,
+            createdAt: new Date(item[0].CreatedAt),
         };
     }
 }

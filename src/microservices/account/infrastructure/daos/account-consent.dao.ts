@@ -64,7 +64,7 @@ export class AccountConsentDAO {
             consentVersion: item[0].ConsentVersion,
             ipAddress: item[0].IpAddress,
             userAgent: item[0].UserAgent,
-            createdAt: item[0].CreatedAt,
+            createdAt: new Date(item[0].CreatedAt),
         };
     }
 }

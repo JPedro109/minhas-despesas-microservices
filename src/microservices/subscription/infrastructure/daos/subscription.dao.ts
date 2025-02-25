@@ -59,7 +59,7 @@ export class SubscriptionDAO {
             subscriptionId: item[0].SubscriptionId,
             subscriptionExternalId: item[0].SubscriptionExternalId,
             planId: item[0].PlanId,
-            createdAt: item[0].CreatedAt,
+            createdAt: new Date(item[0].CreatedAt),
         };
     }
 }

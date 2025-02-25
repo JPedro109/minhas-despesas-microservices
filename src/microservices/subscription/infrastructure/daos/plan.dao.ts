@@ -59,8 +59,8 @@ export class PlanDAO {
             amount: item.Amount,
             durationInDays: item.DurationInDays,
             planExternalId: item.PlanExternalId,
-            createdAt: item.CreatedAt,
-            updatedAt: item.UpdatedAt,
+            createdAt: new Date(item.CreatedAt),
+            updatedAt: item.UpdatedAt ? new Date(item.UpdatedAt) : null,
         };
     }
 }

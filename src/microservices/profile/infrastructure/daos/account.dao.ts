@@ -41,7 +41,7 @@ export class AccountDAO {
 
         return {
             accountId: item.AccountId,
-            createdAt: item.CreatedAt,
+            createdAt: new Date(item.CreatedAt),
         };
     }
 

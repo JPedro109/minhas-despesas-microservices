@@ -58,7 +58,7 @@ export class ProfileDAO {
             accountId: item[0].AccountId,
             username: item[0].Username,
             createdAt: new Date(item[0].CreatedAt),
-            updatedAt: new Date(item[0].UpdatedAt),
+            updatedAt: item[0].UpdatedAt ? new Date(item[0].UpdatedAt) : null,
         };
     }
 

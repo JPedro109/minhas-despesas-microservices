@@ -47,8 +47,8 @@ export class AccountDAO {
         return {
             accountId: item.AccountId,
             email: item.Email,
-            createdAt: item.CreatedAt,
-            updatedAt: item.UpdatedAt,
+            createdAt: new Date(item.CreatedAt),
+            updatedAt: item.UpdatedAt ? new Date(item.UpdatedAt) : null,
         };
     }
 

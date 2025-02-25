@@ -70,10 +70,10 @@ export class ExpenseDAO {
             expenseId: item.ExpenseId,
             expenseName: item.ExpenseName,
             expenseValue: item.ExpenseValue,
-            expenseDueDate: item.ExpenseDueDate,
+            expenseDueDate: new Date(item.ExpenseDueDate),
             paid: item.Paid,
-            createdAt: item.CreatedAt,
-            updatedAt: item.UpdatedAt,
+            createdAt: new Date(item.CreatedAt),
+            updatedAt: item.UpdatedAt ? new Date(item.UpdatedAt) : null,
         }));
     }
 
@@ -120,10 +120,10 @@ export class ExpenseDAO {
             expenseId: item.ExpenseId,
             expenseName: item.ExpenseName,
             expenseValue: item.ExpenseValue,
-            expenseDueDate: item.ExpenseDueDate,
+            expenseDueDate: new Date(item.ExpenseDueDate),
             paid: item.Paid,
-            createdAt: item.CreatedAt,
-            updatedAt: item.UpdatedAt,
+            createdAt: new Date(item.CreatedAt),
+            updatedAt: item.UpdatedAt ? new Date(item.UpdatedAt) : null,
         }));
     }
 
@@ -143,10 +143,10 @@ export class ExpenseDAO {
             expenseId: item.ExpenseId,
             expenseName: item.ExpenseName,
             expenseValue: item.ExpenseValue,
-            expenseDueDate: item.ExpenseDueDate,
+            expenseDueDate: new Date(item.ExpenseDueDate),
             paid: item.Paid,
-            createdAt: item.CreatedAt,
-            updatedAt: item.UpdatedAt,
+            createdAt: new Date(item.CreatedAt),
+            updatedAt: item.UpdatedAt ? new Date(item.UpdatedAt) : null,
         };
     }
 

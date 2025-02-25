@@ -61,8 +61,8 @@ export class PaymentMethodDAO {
             paymentMethodId: item[0].PaymentMethodId,
             name: item[0].Name,
             token: item[0].Token,
-            createdAt: item[0].CreatedAt,
-            updatedAt: item[0].UpdatedAt,
+            createdAt: new Date(item[0].CreatedAt),
+            updatedAt: item[0].UpdatedAt ? new Date(item[0].UpdatedAt) : null,
         };
     }
 

@@ -70,7 +70,7 @@ export class ExtractDAO {
             referenceYear: item.ReferenceYear,
             urlExpiryDate: item.UrlExpiryDate,
             expiryDate: item.ExpiryDate,
-            createdAt: item.CreatedAt,
+            createdAt: new Date(item.CreatedAt),
         }));
     }
 
@@ -93,7 +93,7 @@ export class ExtractDAO {
             referenceYear: item.ReferenceYear,
             urlExpiryDate: item.UrlExpiryDate,
             expiryDate: item.ExpiryDate,
-            createdAt: item.CreatedAt,
+            createdAt: new Date(item.CreatedAt),
         };
     }
 }

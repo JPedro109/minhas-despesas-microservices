@@ -77,9 +77,9 @@ export class PaymentHistoryDAO {
             paymentHistoryId: items[0].PaymentHistoryId,
             expenseName: items[0].ExpenseName,
             expenseValue: items[0].ExpenseValue,
-            expenseDueDate: items[0].ExpenseDueDate,
-            paymentDate: items[0].PaymentDate,
-            createdAt: items[0].CreatedAt,
+            expenseDueDate: new Date(items[0].ExpenseDueDate),
+            paymentDate: new Date(items[0].PaymentDate),
+            createdAt: new Date(items[0].CreatedAt),
         };
     }
 
@@ -100,9 +100,9 @@ export class PaymentHistoryDAO {
             paymentHistoryId: item.PaymentHistoryId,
             expenseName: item.ExpenseName,
             expenseValue: item.ExpenseValue,
-            expenseDueDate: item.ExpenseDueDate,
-            paymentDate: item.PaymentDate,
-            createdAt: item.CreatedAt,
+            expenseDueDate: new Date(item.ExpenseDueDate),
+            paymentDate: new Date(item.PaymentDate),
+            createdAt: new Date(item.CreatedAt),
         };
     }
 
@@ -146,9 +146,9 @@ export class PaymentHistoryDAO {
             paymentHistoryId: item.PaymentHistoryId,
             expenseName: item.ExpenseName,
             expenseValue: item.ExpenseValue,
-            expenseDueDate: item.ExpenseDueDate,
-            paymentDate: item.PaymentDate,
-            createdAt: item.CreatedAt,
+            expenseDueDate: new Date(item.ExpenseDueDate),
+            paymentDate: new Date(item.PaymentDate),
+            createdAt: new Date(item.CreatedAt),
         }));
     }
 
