@@ -122,7 +122,7 @@ export class PaymentHistoryDAO {
                         expression: ">=",
                         value: new Date(
                             expenseDueYear,
-                            expenseDueMonth,
+                            expenseDueMonth - 1,
                         ).toISOString(),
                     },
                     {
