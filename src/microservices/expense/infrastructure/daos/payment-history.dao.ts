@@ -156,7 +156,7 @@ export class PaymentHistoryDAO {
         await this.dynamo.deleteSubPartion(
             `${this.fatherEntity}#${expenseId}`,
             `${PaymentHistoryDAO.entity}#`,
-            "GS1",
+            "GSI1",
         );
     }
 
