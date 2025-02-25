@@ -9,8 +9,8 @@ export type ExpenseExtractProps = {
         expenseId: string;
         expenseName: string;
         expenseValue: number;
-        dueDate: Date;
-        paidDate: Date;
+        dueDate: string;
+        paidDate: string;
     }[];
 };
 
@@ -119,8 +119,8 @@ export class Extract {
             return [
                 expense.expenseName,
                 expense.expenseValue.toFixed(2),
-                expense.dueDate.toLocaleDateString(),
-                expense.paidDate.toLocaleDateString(),
+                expense.dueDate,
+                expense.paidDate,
                 delay,
             ];
         });

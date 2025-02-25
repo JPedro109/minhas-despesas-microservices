@@ -89,8 +89,8 @@ export class CreateExtractService {
             expenseId: x.expenseId,
             expenseName: x.expenseName,
             expenseValue: x.expenseValue,
-            dueDate: x.expenseDueDate,
-            paidDate: x.paymentDate,
+            dueDate: this.formatDate(x.expenseDueDate),
+            paidDate: this.formatDate(x.paymentDate),
         }));
         const file = await this.extract.generateExpensesExtract({
             referenceMonth,
@@ -114,5 +114,13 @@ export class CreateExtractService {
         });
 
         return extractCreated.extractId;
+    }
+
+    private formatDate(date: Date): string {
+        return date.toLocaleString("pt-BR", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+        });
     }
 }
