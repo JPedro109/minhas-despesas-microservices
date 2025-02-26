@@ -3,6 +3,7 @@ import {
     AccountConsentDAO,
     AccountDAO,
     IdentityProvider,
+    Notification,
 } from "../infrastructure";
 
 export type CreateAccountDTO = {
@@ -33,6 +34,7 @@ export class CreateAccountService {
         private readonly accountDAO: AccountDAO,
         private readonly accountConsentDAO: AccountConsentDAO,
         private readonly identityProvider: IdentityProvider,
+        private readonly notify: Notification,
     ) {}
 
     async execute({
@@ -46,6 +48,7 @@ export class CreateAccountService {
             accountId: Utils.createUUID(),
         });
 
+        let identityProviderId: string;
         try {
             await this.accountConsentDAO.createAccountConsent({
                 accountConsentId: Utils.createUUID(),
@@ -55,14 +58,25 @@ export class CreateAccountService {
                 userAgent,
             });
 
-            await this.identityProvider.createAccount(
+            identityProviderId = await this.identityProvider.createAccount(
                 databaseAccount.accountId,
                 email,
                 password,
             );
 
+            await this.notify.sendEvent({
+                event: "create:account",
+                data: {
+                    accountId: databaseAccount.accountId,
+                    email,
+                },
+            });
+
             return databaseAccount.accountId;
         } catch (error) {
+            if (identityProviderId) {
+                await this.identityProvider.deleteAccount(identityProviderId);
+            }
             await this.accountDAO.deleteAccountById(databaseAccount.accountId);
             throw error;
         }
