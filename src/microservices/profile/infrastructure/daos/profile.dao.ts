@@ -1,4 +1,5 @@
 import { Dynamo } from "@/shared";
+import { AccountDAO } from "./account.dao";
 
 export type ProfileDynamoModel = {
     ProfileId: string;
@@ -17,7 +18,7 @@ export type ProfileModel = {
 };
 
 export class ProfileDAO {
-    private readonly fatherEntity: string = "Account";
+    private readonly fatherEntity: string = AccountDAO.entity;
     static entity: string = "Profile";
 
     constructor(private readonly dynamo: Dynamo) {}

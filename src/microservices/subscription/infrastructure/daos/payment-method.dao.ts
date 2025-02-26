@@ -1,4 +1,5 @@
 import { Dynamo } from "@/shared";
+import { AccountDAO } from "./account.dao";
 
 export type PaymentMethodDynamoModel = {
     AccountId: string;
@@ -19,7 +20,7 @@ export type PaymentMethodModel = {
 };
 
 export class PaymentMethodDAO {
-    private readonly fatherEntity: string = "Account";
+    private readonly fatherEntity: string = AccountDAO.entity;
     static entity: string = "PaymentMethod";
 
     constructor(private readonly dynamo: Dynamo) {}
