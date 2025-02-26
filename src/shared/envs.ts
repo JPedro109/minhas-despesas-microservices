@@ -13,6 +13,7 @@ type EnvironmentVariables = {
     webhookSecret: string;
     sendEmailQueue: string;
     awsBucketName: string;
+    eventTopic: string;
 };
 
 export const envs: EnvironmentVariables = {
@@ -28,4 +29,5 @@ export const envs: EnvironmentVariables = {
     webhookSecret: process.env.WEBHOOK_SECRET,
     sendEmailQueue: process.env.SEND_EMAIL_QUEUE,
     awsBucketName: process.env.AWS_BUCKET_NAME,
+    eventTopic: process.env.EVENT_TOPIC,
 };
