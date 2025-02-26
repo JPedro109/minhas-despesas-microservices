@@ -100,7 +100,7 @@ export class ExpenseDAO {
                         expression: "<=",
                         value: new Date(
                             expenseDueYear,
-                            expenseDueMonth,
+                            expenseDueMonth + 1,
                             0,
                         ).toISOString(),
                     },
@@ -110,6 +110,7 @@ export class ExpenseDAO {
                         value: paymentStatus,
                     },
                 ],
+                indexName: "GSI1",
             },
         );
 
@@ -179,7 +180,13 @@ export class ExpenseDAO {
             datas.map((x) => ({
                 pk: `${this.fatherEntity}#${x.accountId}`,
                 sk: `${ExpenseDAO.entity}#${x.expenseId}`,
-                data: x,
+                data: {
+                    ExpenseName: x.data.expenseName,
+                    ExpenseValue: x.data.expenseValue,
+                    ExpenseDueDate: x.data.expenseDueDate.toISOString(),
+                    Paid: x.data.paid,
+                    UpdatedAt: new Date().toISOString(),
+                },
             })),
         );
     }
