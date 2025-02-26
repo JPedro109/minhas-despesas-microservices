@@ -1,6 +1,6 @@
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
-import sharp from "sharp";
 import path from "node:path";
+import fs from "node:fs";
 
 export type ExpenseExtractProps = {
     referenceMonth: number;
@@ -33,11 +33,11 @@ export class Extract {
             StandardFonts.TimesRomanBold,
         );
 
-        const iconSvgPath = path.resolve(
+        const iconPngPath = path.resolve(
             __dirname,
-            "./icons/money-check-dollar-solid.svg",
+            "./icons/money-check-dollar-solid.png",
         );
-        const iconPngBuffer = await sharp(iconSvgPath).png().toBuffer();
+        const iconPngBuffer = fs.readFileSync(iconPngPath);
 
         const iconImage = await pdfDoc.embedPng(iconPngBuffer);
         const iconWidth = 80;
