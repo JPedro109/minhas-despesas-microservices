@@ -9,7 +9,7 @@ export class UpdatePreviousMonthPaidExpensesToUnpaidService {
         const expenses =
             await this.expenseDAO.getExpensesByExpenseDueYearAndExpenseDueMonthAndPaymentStatus(
                 dateWithPreviousMonth.getUTCFullYear(),
-                dateWithPreviousMonth.getUTCDate(),
+                dateWithPreviousMonth.getUTCMonth(),
                 true,
             );
 
