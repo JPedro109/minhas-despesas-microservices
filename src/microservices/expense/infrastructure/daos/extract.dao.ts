@@ -29,13 +29,14 @@ export class ExtractDAO {
     constructor(private readonly dynamo: Dynamo) {}
 
     async createExtract(
-        data: Omit<ExtractModel, "createdAt" | "updatedAt">,
+        data: Omit<ExtractModel, "createdAt">,
     ): Promise<ExtractModel> {
         await this.dynamo.create(
             `${this.fatherEntity}#${data.accountId}`,
             `${ExtractDAO.entity}#${data.extractId}`,
             {
                 Type: ExtractDAO.entity,
+                AccountId: data.extractId,
                 ExtractId: data.extractId,
                 ReferenceMonth: data.referenceMonth,
                 ReferenceYear: data.referenceYear,
