@@ -17,7 +17,7 @@ export const updateAccountSchema: RequestSchema = {
     },
 };
 
-export class UpdateAccountService {
+export class UpdateAccountEmailService {
     constructor(private readonly accountDAO: AccountDAO) {}
 
     async execute({ accountId, email }: UpdateAccountDTO): Promise<void> {
