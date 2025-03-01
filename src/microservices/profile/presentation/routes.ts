@@ -1,5 +1,4 @@
-import { Dynamo, Middy, Utils } from "@/shared";
-import { ProfileDAO } from "../infrastructure";
+import { Middy, Utils } from "@/shared";
 import {
     getProfileSchema,
     updateProfileSchema,
@@ -9,9 +8,7 @@ import {
     GetProfileService,
     UpdateProfileService,
 } from "../services";
-
-const dynamo = new Dynamo("Profile");
-const profileDAO = new ProfileDAO(dynamo);
+import { profileDAO } from "../factories";
 
 export const routes = Middy.build([
     {
