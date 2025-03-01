@@ -1,16 +1,37 @@
 import { Middy, Utils } from "@/shared";
 import {
+    createProfileSchema,
     getProfileSchema,
     updateProfileSchema,
+    CreateProfileDTO,
     GetProfileDTO,
     GetProfileResponseDTO,
     UpdateProfileDTO,
+    CreateProfileService,
     GetProfileService,
     UpdateProfileService,
 } from "../services";
 import { profileDAO } from "../factories";
 
 export const routes = Middy.build([
+    {
+        path: "/profiles",
+        method: "POST",
+        successStatusCode: 201,
+        handler: async (event): Promise<string> => {
+            const { username } = event.body;
+            const { ["account_id"]: accountId } =
+                event.requestContext.authorizer.jwt.claims;
+
+            const dto: CreateProfileDTO = {
+                accountId: accountId as string,
+                username,
+            };
+            Utils.validateRequestSchema(dto, createProfileSchema);
+
+            return await new CreateProfileService(profileDAO).execute(dto);
+        },
+    },
     {
         path: "/profiles",
         method: "GET",
