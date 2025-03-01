@@ -1,12 +1,17 @@
 import { RequestSchema } from "@/shared";
-import { IdentityProvider } from "../infrastructure";
+import { IdentityProvider, Notification } from "../infrastructure";
 
 export type UpdateAccountEmailDTO = {
+    identityProviderId: string;
     accessToken: string;
     code: string;
 };
 
 export const updateAccountEmailSchema: RequestSchema = {
+    identityProviderId: {
+        type: "string",
+        optional: false,
+    },
     accessToken: {
         type: "string",
         optional: false,
@@ -18,9 +23,25 @@ export const updateAccountEmailSchema: RequestSchema = {
 };
 
 export class UpdateAccountEmailService {
-    constructor(private readonly identityProvider: IdentityProvider) {}
+    constructor(
+        private readonly identityProvider: IdentityProvider,
+        private readonly notify: Notification,
+    ) {}
 
-    async execute({ accessToken, code }: UpdateAccountEmailDTO): Promise<void> {
+    async execute({
+        identityProviderId,
+        accessToken,
+        code,
+    }: UpdateAccountEmailDTO): Promise<void> {
         await this.identityProvider.updateEmail(accessToken, code);
+        const data =
+            await this.identityProvider.getAccountInfo(identityProviderId);
+        await this.notify.sendEvent({
+            event: "update:account-email",
+            data: {
+                accountId: data.accountId,
+                email: data.email,
+            },
+        });
     }
 }

@@ -190,14 +190,19 @@ export const routes = Middy.build([
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
             const { accessToken, code } = event.body;
+            const { sub } = event.requestContext.authorizer.jwt.claims;
 
             const dto: UpdateAccountEmailDTO = {
+                identityProviderId: sub as string,
                 accessToken,
                 code,
             };
             Utils.validateRequestSchema(dto, updateAccountEmailSchema);
 
-            await new UpdateAccountEmailService(identityProvider).execute(dto);
+            await new UpdateAccountEmailService(
+                identityProvider,
+                notification,
+            ).execute(dto);
         },
     },
     {
