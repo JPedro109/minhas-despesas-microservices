@@ -1,20 +1,9 @@
-import { RequestSchema, Utils } from "@/shared";
+import { Utils } from "@/shared";
 import { AccountDAO, CustomerDAO, Payment } from "../../infrastructure";
 
 export type CreateAccountDTO = {
     accountId: string;
     email: string;
-};
-
-export const createAccountSchema: RequestSchema = {
-    accountId: {
-        type: "string",
-        optional: false,
-    },
-    email: {
-        type: "string",
-        optional: false,
-    },
 };
 
 export class CreateAccountService {
