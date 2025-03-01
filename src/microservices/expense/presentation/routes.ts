@@ -1,12 +1,12 @@
-import { Dynamo, Middy, Utils } from "@/shared";
+import { Middy, Utils } from "@/shared";
 import {
-    AccountDAO,
-    ExpenseDAO,
-    ExtractDAO,
-    PaymentHistoryDAO,
-    Extract,
-    Bucket,
-} from "../infrastructure";
+    accountDAO,
+    expenseDAO,
+    extractDAO,
+    paymentHistoryDAO,
+    extract,
+    bucket,
+} from "../factories";
 import {
     createExpenseSchema,
     createExtractSchema,
@@ -35,16 +35,6 @@ import {
     UpdateExpenseService,
     UpdatePreviousMonthPaidExpensesToUnpaidService,
 } from "../services";
-
-const dynamo = new Dynamo("Expense");
-const accountDAO = new AccountDAO(dynamo);
-const expenseDAO = new ExpenseDAO(dynamo);
-const extractDAO = new ExtractDAO(dynamo);
-const paymentHistoryDAO = new PaymentHistoryDAO(dynamo);
-
-const extract = new Extract();
-
-const bucket = new Bucket();
 
 export const routes = Middy.build([
     {
