@@ -1,4 +1,8 @@
-import { CreateAccountService, UpdateAccountEmailService } from "../services";
+import {
+    CreateAccountService,
+    DeleteAccountService,
+    UpdateAccountEmailService,
+} from "../services";
 import { accountDAO } from "../factories";
 
 import { SQSEvent } from "aws-lambda";
@@ -18,6 +22,10 @@ export const events = async (event: SQSEvent): Promise<void> => {
 
             case "update:account-email":
                 await new UpdateAccountEmailService(accountDAO).execute(data);
+                break;
+
+            case "delete:account":
+                await new DeleteAccountService(accountDAO).execute(data);
                 break;
         }
     }
