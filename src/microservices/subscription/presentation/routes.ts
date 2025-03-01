@@ -1,13 +1,13 @@
-import { Dynamo, Middy, SQS, Utils } from "@/shared";
+import { Middy, Utils } from "@/shared";
 import {
-    AccountDAO,
-    CustomerDAO,
-    PaymentMethodDAO,
-    PlanDAO,
-    SubscriptionDAO,
-    Notification,
-    Payment,
-} from "../infrastructure";
+    accountDAO,
+    customerDAO,
+    paymentMethodDAO,
+    planDAO,
+    subscriptionDAO,
+    notification,
+    payment,
+} from "../factories";
 import {
     createPaymentMethodSchema,
     deletePaymentMethodSchema,
@@ -40,18 +40,6 @@ import {
     UpdateSubscriptionRenewalStatusDTO,
     UpdateSubscriptionRenewalStatusService,
 } from "../services";
-
-const dynamo = new Dynamo("Subscription");
-const accountDAO = new AccountDAO(dynamo);
-const customerDAO = new CustomerDAO(dynamo);
-const paymentMethodDAO = new PaymentMethodDAO(dynamo);
-const planDAO = new PlanDAO(dynamo);
-const subscriptionDAO = new SubscriptionDAO(dynamo);
-
-const sqs = new SQS();
-const notification = new Notification(sqs);
-
-const payment = new Payment();
 
 export const routes = Middy.build([
     {
