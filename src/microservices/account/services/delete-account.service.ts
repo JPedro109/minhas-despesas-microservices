@@ -1,5 +1,5 @@
 import { RequestSchema } from "@/shared";
-import { AccountDAO, IdentityProvider } from "../infrastructure";
+import { AccountDAO, IdentityProvider, Notification } from "../infrastructure";
 
 export type DeleteAccountDTO = {
     accountId: string;
@@ -21,6 +21,7 @@ export class DeleteAccountService {
     constructor(
         private readonly accountDAO: AccountDAO,
         private readonly identityProvider: IdentityProvider,
+        private readonly notify: Notification,
     ) {}
 
     async execute({
@@ -37,5 +38,12 @@ export class DeleteAccountService {
         if (identityProviderAccount) {
             await this.identityProvider.deleteAccount(identityProviderId);
         }
+
+        await this.notify.sendEvent({
+            event: "delete:account",
+            data: {
+                accountId: databaseAccount.accountId,
+            },
+        });
     }
 }

@@ -110,6 +110,7 @@ export const routes = Middy.build([
             await new DeleteAccountService(
                 accountDAO,
                 identityProvider,
+                notification,
             ).execute(dto);
         },
     },
