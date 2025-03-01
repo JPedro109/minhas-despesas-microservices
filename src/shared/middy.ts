@@ -88,9 +88,6 @@ export class Middy {
     ): MiddlewareObj<APIGatewayProxyEventV2WithJWTAuthorizer> {
         return {
             after: (request): void => {
-                console.info(
-                    `${request.event.requestContext.http.path} ${request.event.requestContext.http.method}`,
-                );
                 request.response = {
                     ...request.response,
                     statusCode: successStatusCode,
