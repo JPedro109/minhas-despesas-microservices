@@ -4,4 +4,4 @@ export * from "./services/invalid-param.error";
 export * from "./services/not-found.error";
 export * from "./services/unauthorized.error";
 
-export * from "./controllers/invalid-schema.error";
+export * from "./presentation/invalid-schema.error";
