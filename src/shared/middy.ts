@@ -10,8 +10,17 @@ import middy, { MiddlewareObj } from "@middy/core";
 import httpRouter from "@middy/http-router";
 import httpJsonBodyParser from "@middy/http-json-body-parser";
 import httpResponseSerializer from "@middy/http-response-serializer";
-import type { APIGatewayProxyEventV2WithJWTAuthorizer } from "aws-lambda";
+import type {
+    APIGatewayProxyEventV2WithJWTAuthorizer,
+    Context,
+} from "aws-lambda";
 
+export type Request = middy.Request<
+    APIGatewayProxyEventV2WithJWTAuthorizer,
+    unknown,
+    Error,
+    Context
+>;
 type Handler = (args: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     body: any;
@@ -30,11 +39,13 @@ type Handler = (args: {
     };
 }) => Promise<unknown>;
 type HttpMethod = "POST" | "GET" | "PATCH" | "PUT" | "DELETE";
+type Middleware = (request: Request) => Promise<void>;
 type Route = {
     successStatusCode: number;
     path: string;
     method: HttpMethod;
     handler: Handler;
+    middlewares?: Middleware[];
     doNotParseJsonBody?: boolean;
 };
 type MiddyHandler = middy.MiddyfiedHandler<unknown, unknown>;
@@ -47,6 +58,7 @@ export class Middy {
             handler: Middy.makeHandler(
                 route.handler,
                 route.successStatusCode,
+                route.middlewares,
                 route.doNotParseJsonBody,
             ),
         }));
@@ -57,6 +69,7 @@ export class Middy {
     private static makeHandler(
         handler: Handler,
         successStatusCode: number,
+        middlewares?: Middleware[],
         doNotParseJsonBody?: boolean,
     ): MiddyHandler {
         const middyHandler = doNotParseJsonBody
@@ -68,7 +81,7 @@ export class Middy {
               );
 
         return middyHandler
-            .use(Middy.middleware(successStatusCode))
+            .use(Middy.middleware(successStatusCode, middlewares))
             .use(
                 httpResponseSerializer({
                     defaultContentType: "application/json",
@@ -85,8 +98,14 @@ export class Middy {
 
     private static middleware(
         successStatusCode: number,
+        middlewares?: Middleware[],
     ): MiddlewareObj<APIGatewayProxyEventV2WithJWTAuthorizer> {
         return {
+            before: async (request): Promise<void> => {
+                for (const middleware of middlewares) {
+                    await middleware(request);
+                }
+            },
             after: (request): void => {
                 request.response = {
                     ...request.response,
