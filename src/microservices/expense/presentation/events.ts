@@ -1,9 +1,10 @@
 import {
     CreateAccountService,
+    CreateSubscriptionService,
     DeleteAccountService,
     UpdateAccountEmailService,
 } from "../services";
-import { accountDAO } from "../factories";
+import { accountDAO, subscriptionDAO } from "../factories";
 
 import { SQSEvent } from "aws-lambda";
 
@@ -26,6 +27,12 @@ export const events = async (event: SQSEvent): Promise<void> => {
 
             case "delete:account":
                 await new DeleteAccountService(accountDAO).execute(data);
+                break;
+
+            case "create:subscription":
+                await new CreateSubscriptionService(subscriptionDAO).execute(
+                    data,
+                );
                 break;
         }
     }
