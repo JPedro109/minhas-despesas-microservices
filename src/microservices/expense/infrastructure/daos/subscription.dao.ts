@@ -33,6 +33,7 @@ export class SubscriptionDAO {
                 Type: SubscriptionDAO.entity,
                 AccountId: data.accountId,
                 SubscriptionId: data.subscriptionId,
+                Active: data.active,
                 CreatedAt: new Date().toISOString(),
             },
         );
