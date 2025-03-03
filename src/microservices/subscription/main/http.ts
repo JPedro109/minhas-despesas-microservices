@@ -20,8 +20,6 @@ import {
     UpdatePaymentMethodNameDTO,
     UpdatePaymentMethodTokenDTO,
     UpdateSubscriptionRenewalStatusDTO,
-} from "../services";
-import {
     payment,
     createPaymentMethodService,
     createSubscriptionService,
@@ -33,7 +31,7 @@ import {
     updatePaymentMethodNameService,
     updatePaymentMethodTokenService,
     updateSubscriptionRenewalStatusService,
-} from "../factories";
+} from "../application";
 
 export const routes = Middy.build([
     {

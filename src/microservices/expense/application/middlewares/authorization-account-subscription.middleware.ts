@@ -1,5 +1,5 @@
 import { ForbiddenError, Request } from "@/shared";
-import { GetAccountSubscriptionService } from "../../services";
+import { GetAccountSubscriptionService } from "../services";
 
 export class AuthorizationAccountSubscriptionMiddleware {
     constructor(

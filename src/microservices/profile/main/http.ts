@@ -7,12 +7,10 @@ import {
     GetProfileDTO,
     GetProfileResponseDTO,
     UpdateProfileDTO,
-} from "../services";
-import {
     createProfileService,
     getProfileService,
     updateProfileService,
-} from "../factories";
+} from "../application";
 
 export const routes = Middy.build([
     {

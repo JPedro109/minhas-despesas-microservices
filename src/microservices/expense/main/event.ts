@@ -3,7 +3,7 @@ import {
     createSubscriptionService,
     deleteAccountService,
     updateAccountEmailService,
-} from "../factories";
+} from "../application";
 
 import { SQSEvent } from "aws-lambda";
 

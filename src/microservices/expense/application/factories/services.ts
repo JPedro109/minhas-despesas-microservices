@@ -23,7 +23,7 @@ import {
     extractDAO,
     paymentHistoryDAO,
     subscriptionDAO,
-} from "../factories";
+} from ".";
 
 // Account
 export const createAccountService = new CreateAccountService(accountDAO);

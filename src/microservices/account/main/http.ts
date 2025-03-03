@@ -21,8 +21,6 @@ import {
     UpdateAccountPasswordDTO,
     VerifyAccountEmailDTO,
     AccountLoginResponseDTO,
-} from "../services";
-import {
     accountLoginService,
     createAccountService,
     deleteAccountService,
@@ -33,7 +31,7 @@ import {
     updateAccountEmailService,
     updateAccountPasswordService,
     verifyAccountEmailService,
-} from "../factories";
+} from "../application";
 
 export const routes = Middy.build([
     {

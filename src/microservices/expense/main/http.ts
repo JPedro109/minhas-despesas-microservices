@@ -10,8 +10,6 @@ import {
     createExtractService,
     getUserExtractsService,
     updatePreviousMonthPaidExpensesToUnpaidService,
-} from "../factories";
-import {
     createExpenseSchema,
     createExtractSchema,
     deleteExpenseSchema,
@@ -29,7 +27,7 @@ import {
     GetUserExtractsResponseDTO,
     PayExpenseDTO,
     UpdateExpenseDTO,
-} from "../services";
+} from "../application";
 
 export const routes = Middy.build([
     {

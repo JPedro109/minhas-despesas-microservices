@@ -1,4 +1,4 @@
-import { events, routes } from "./presentation";
+import { events, routes } from "./main";
 
 export const handler = async (event, context): Promise<unknown> => {
     if ("routeKey" in event && "rawPath" in event) {

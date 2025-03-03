@@ -1,4 +1,4 @@
-import { createAccountService, deleteAccountService } from "../factories";
+import { createAccountService, deleteAccountService } from "../application";
 
 import { SQSEvent } from "aws-lambda";
 

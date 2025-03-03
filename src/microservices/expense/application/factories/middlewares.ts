@@ -1,5 +1,5 @@
-import { getSubscriptionAccountService } from "../factories";
-import { AuthorizationAccountSubscriptionMiddleware } from "../presentation/middlewares";
+import { getSubscriptionAccountService } from ".";
+import { AuthorizationAccountSubscriptionMiddleware } from "../middlewares";
 
 export const authorizationAccountSubscriptionMiddleware =
     new AuthorizationAccountSubscriptionMiddleware(
