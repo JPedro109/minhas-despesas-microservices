@@ -6,6 +6,7 @@ import {
     paymentHistoryDAO,
     extract,
     bucket,
+    authorizationAccountSubscriptionMiddleware,
 } from "../factories";
 import {
     createExpenseSchema,
@@ -62,6 +63,11 @@ export const routes = Middy.build([
                 expenseDueDate: new Date(expenseDueDate),
             });
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
     {
         path: "/expenses",
@@ -81,6 +87,11 @@ export const routes = Middy.build([
                 expenseDAO,
             ).execute(dto);
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
     {
         path: "/expenses/{expenseId}",
@@ -107,6 +118,11 @@ export const routes = Middy.build([
                 expenseDueDate: new Date(expenseDueDate),
             });
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
     {
         path: "/expenses/{expenseId}",
@@ -131,6 +147,11 @@ export const routes = Middy.build([
                 paymentHistoryDAO,
             ).execute(dto);
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
     {
         path: "/expenses/pay/{expenseId}",
@@ -151,6 +172,11 @@ export const routes = Middy.build([
                 dto,
             );
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
     {
         path: "/expenses/undo-payment/{expenseId}",
@@ -172,6 +198,11 @@ export const routes = Middy.build([
                 paymentHistoryDAO,
             ).execute(dto);
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
     {
         path: "/extracts",
@@ -197,6 +228,11 @@ export const routes = Middy.build([
                 bucket,
             ).execute(dto);
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
     {
         path: "/extracts",
@@ -215,6 +251,11 @@ export const routes = Middy.build([
                 extractDAO,
             ).execute(dto);
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
     {
         path: "/expenses/unpaid-previous-month",
@@ -225,5 +266,10 @@ export const routes = Middy.build([
                 expenseDAO,
             ).execute();
         },
+        middlewares: [
+            authorizationAccountSubscriptionMiddleware.handler.bind(
+                authorizationAccountSubscriptionMiddleware,
+            ),
+        ],
     },
 ]);
