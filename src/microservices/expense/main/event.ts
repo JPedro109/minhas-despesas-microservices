@@ -3,6 +3,7 @@ import {
     createSubscriptionService,
     deleteAccountService,
     updateAccountEmailService,
+    updateSubscriptionService,
 } from "../application";
 
 import { SQSEvent } from "aws-lambda";
@@ -30,6 +31,10 @@ export const events = async (event: SQSEvent): Promise<void> => {
 
             case "create:subscription":
                 await createSubscriptionService.execute(data);
+                break;
+
+            case "update:subscription":
+                await updateSubscriptionService.execute(data);
                 break;
         }
     }
