@@ -32,7 +32,11 @@ export const createAccountService = new CreateAccountService(
 export const updateAccountEmailService = new UpdateAccountEmailService(
     accountDAO,
 );
-export const deleteAccountService = new DeleteAccountService(accountDAO);
+export const deleteAccountService = new DeleteAccountService(
+    accountDAO,
+    customerDAO,
+    payment,
+);
 
 // Plan
 export const getPlansService = new GetPlansService(planDAO);
