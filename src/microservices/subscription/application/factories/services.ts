@@ -81,5 +81,6 @@ export const notifyAccountOfSubscriptionPaymentFailureService =
     new NotifyAccountOfSubscriptionPaymentFailureService(
         customerDAO,
         accountDAO,
+        subscriptionDAO,
         notification,
     );

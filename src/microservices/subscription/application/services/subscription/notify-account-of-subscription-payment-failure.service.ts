@@ -4,6 +4,7 @@ import {
     CustomerDAO,
     EmailTemplateEnum,
     Notification,
+    SubscriptionDAO,
 } from "../../infrastructure";
 
 export type NotifyAccountOfSubscriptionPaymentFailureDTO = {
@@ -21,6 +22,7 @@ export class NotifyAccountOfSubscriptionPaymentFailureService {
     constructor(
         private readonly customerDAO: CustomerDAO,
         private readonly accountDAO: AccountDAO,
+        private readonly subscriptionDAO: SubscriptionDAO,
         private readonly notification: Notification,
     ) {}
 
@@ -37,6 +39,22 @@ export class NotifyAccountOfSubscriptionPaymentFailureService {
             customer.accountId,
         );
 
+        const subscription =
+            await this.subscriptionDAO.getSubscriptionByAccountId(
+                account.accountId,
+            );
+
+        if (!subscription) {
+            throw new NotFoundError("Não existe uma assinatura");
+        }
+
+        await this.notification.sendEvent({
+            event: "update:subscription",
+            data: {
+                accountId: account.accountId,
+                active: false,
+            },
+        });
         await this.notification.sendEmail(
             account.email,
             EmailTemplateEnum.NotifySubscriptionPaymentFailureTemplate,
