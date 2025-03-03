@@ -102,8 +102,10 @@ export class Middy {
     ): MiddlewareObj<APIGatewayProxyEventV2WithJWTAuthorizer> {
         return {
             before: async (request): Promise<void> => {
-                for (const middleware of middlewares) {
-                    await middleware(request);
+                if (middlewares?.length) {
+                    for (const middleware of middlewares) {
+                        await middleware(request);
+                    }
                 }
             },
             after: (request): void => {
