@@ -7,11 +7,12 @@ import {
     GetProfileDTO,
     GetProfileResponseDTO,
     UpdateProfileDTO,
-    CreateProfileService,
-    GetProfileService,
-    UpdateProfileService,
 } from "../services";
-import { profileDAO } from "../factories";
+import {
+    createProfileService,
+    getProfileService,
+    updateProfileService,
+} from "../factories";
 
 export const routes = Middy.build([
     {
@@ -29,7 +30,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, createProfileSchema);
 
-            return await new CreateProfileService(profileDAO).execute(dto);
+            return await createProfileService.execute(dto);
         },
     },
     {
@@ -45,7 +46,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, getProfileSchema);
 
-            return await new GetProfileService(profileDAO).execute(dto);
+            return await getProfileService.execute(dto);
         },
     },
     {
@@ -63,7 +64,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, updateProfileSchema);
 
-            await new UpdateProfileService(profileDAO).execute(dto);
+            await updateProfileService.execute(dto);
         },
     },
 ]);

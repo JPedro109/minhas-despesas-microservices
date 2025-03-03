@@ -1,10 +1,4 @@
-import { Dynamo, Middy, SNS, Utils } from "@/shared";
-import {
-    AccountConsentDAO,
-    AccountDAO,
-    IdentityProvider,
-    Notification,
-} from "../infrastructure";
+import { Middy, Utils } from "@/shared";
 import {
     accountLoginSchema,
     createAccountSchema,
@@ -27,26 +21,19 @@ import {
     UpdateAccountPasswordDTO,
     VerifyAccountEmailDTO,
     AccountLoginResponseDTO,
-    AccountLoginService,
-    CreateAccountService,
-    DeleteAccountService,
-    RecoveryPasswordService,
-    RefreshAccountTokenService,
-    SendAccountEmailUpdateEmailService,
-    SendPasswordRecoveryEmailService,
-    UpdateAccountEmailService,
-    UpdateAccountPasswordService,
-    VerifyAccountEmailService,
 } from "../services";
-
-const dynamo = new Dynamo("Account");
-const accountDAO = new AccountDAO(dynamo);
-const accountConsentDAO = new AccountConsentDAO(dynamo);
-
-const identityProvider = new IdentityProvider();
-
-const sns = new SNS();
-const notification = new Notification(sns);
+import {
+    accountLoginService,
+    createAccountService,
+    deleteAccountService,
+    recoveryPasswordService,
+    refreshAccountTokenService,
+    sendAccountEmailUpdateEmailService,
+    sendPasswordRecoveryEmailService,
+    updateAccountEmailService,
+    updateAccountPasswordService,
+    verifyAccountEmailService,
+} from "../factories";
 
 export const routes = Middy.build([
     {
@@ -62,7 +49,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, accountLoginSchema);
 
-            return await new AccountLoginService(identityProvider).execute(dto);
+            return await accountLoginService.execute(dto);
         },
     },
     {
@@ -85,12 +72,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, createAccountSchema);
 
-            return await new CreateAccountService(
-                accountDAO,
-                accountConsentDAO,
-                identityProvider,
-                notification,
-            ).execute(dto);
+            return await createAccountService.execute(dto);
         },
     },
     {
@@ -107,11 +89,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, deleteAccountSchema);
 
-            await new DeleteAccountService(
-                accountDAO,
-                identityProvider,
-                notification,
-            ).execute(dto);
+            await deleteAccountService.execute(dto);
         },
     },
     {
@@ -128,7 +106,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, recoveryPasswordSchema);
 
-            await new RecoveryPasswordService(identityProvider).execute(dto);
+            await recoveryPasswordService.execute(dto);
         },
     },
     {
@@ -144,9 +122,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, refreshAccountTokenSchema);
 
-            return await new RefreshAccountTokenService(
-                identityProvider,
-            ).execute(dto);
+            return await refreshAccountTokenService.execute(dto);
         },
     },
     {
@@ -163,9 +139,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, sendAccountEmailUpdateEmailSchema);
 
-            await new SendAccountEmailUpdateEmailService(
-                identityProvider,
-            ).execute(dto);
+            await sendAccountEmailUpdateEmailService.execute(dto);
         },
     },
     {
@@ -180,9 +154,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, sendPasswordRecoveryEmailSchema);
 
-            await new SendPasswordRecoveryEmailService(
-                identityProvider,
-            ).execute(dto);
+            await sendPasswordRecoveryEmailService.execute(dto);
         },
     },
     {
@@ -200,10 +172,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, updateAccountEmailSchema);
 
-            await new UpdateAccountEmailService(
-                identityProvider,
-                notification,
-            ).execute(dto);
+            await updateAccountEmailService.execute(dto);
         },
     },
     {
@@ -220,9 +189,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, updateAccountPasswordSchema);
 
-            await new UpdateAccountPasswordService(identityProvider).execute(
-                dto,
-            );
+            await updateAccountPasswordService.execute(dto);
         },
     },
     {
@@ -238,7 +205,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, verifyAccountEmailSchema);
 
-            await new VerifyAccountEmailService(identityProvider).execute(dto);
+            await verifyAccountEmailService.execute(dto);
         },
     },
 ]);

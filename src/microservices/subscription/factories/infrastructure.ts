@@ -7,7 +7,7 @@ import {
     SubscriptionDAO,
     Notification,
     Payment,
-} from "./infrastructure";
+} from "../infrastructure";
 
 const dynamo = new Dynamo("Subscription");
 export const accountDAO = new AccountDAO(dynamo);

@@ -1,12 +1,15 @@
 import { Middy, Utils } from "@/shared";
 import {
-    accountDAO,
-    expenseDAO,
-    extractDAO,
-    paymentHistoryDAO,
-    extract,
-    bucket,
     authorizationAccountSubscriptionMiddleware,
+    createExpenseService,
+    getAccountExpensesService,
+    updateExpenseService,
+    deleteExpenseService,
+    payExpenseService,
+    expenseUndoPaymentService,
+    createExtractService,
+    getUserExtractsService,
+    updatePreviousMonthPaidExpensesToUnpaidService,
 } from "../factories";
 import {
     createExpenseSchema,
@@ -17,7 +20,6 @@ import {
     payExpenseSchema,
     updateExpenseSchema,
     getAccountExtractsSchema,
-    CreateExpenseService,
     CreateExpenseDTO,
     CreateExtractDTO,
     DeleteExpenseDTO,
@@ -27,14 +29,6 @@ import {
     GetUserExtractsResponseDTO,
     PayExpenseDTO,
     UpdateExpenseDTO,
-    CreateExtractService,
-    DeleteExpenseService,
-    ExpenseUndoPaymentService,
-    GetAccountExpensesService,
-    GetUserExtractsService,
-    PayExpenseService,
-    UpdateExpenseService,
-    UpdatePreviousMonthPaidExpensesToUnpaidService,
 } from "../services";
 
 export const routes = Middy.build([
@@ -55,10 +49,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, createExpenseSchema);
 
-            return await new CreateExpenseService(
-                accountDAO,
-                expenseDAO,
-            ).execute({
+            return await createExpenseService.execute({
                 ...dto,
                 expenseDueDate: new Date(expenseDueDate),
             });
@@ -82,10 +73,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, getAccountExpensesSchema);
 
-            return await new GetAccountExpensesService(
-                accountDAO,
-                expenseDAO,
-            ).execute(dto);
+            return await getAccountExpensesService.execute(dto);
         },
         middlewares: [
             authorizationAccountSubscriptionMiddleware.handler.bind(
@@ -113,7 +101,7 @@ export const routes = Middy.build([
 
             Utils.validateRequestSchema(dto, updateExpenseSchema);
 
-            await new UpdateExpenseService(expenseDAO).execute({
+            await updateExpenseService.execute({
                 ...dto,
                 expenseDueDate: new Date(expenseDueDate),
             });
@@ -142,10 +130,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, deleteExpenseSchema);
 
-            await new DeleteExpenseService(
-                expenseDAO,
-                paymentHistoryDAO,
-            ).execute(dto);
+            await deleteExpenseService.execute(dto);
         },
         middlewares: [
             authorizationAccountSubscriptionMiddleware.handler.bind(
@@ -168,9 +153,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, payExpenseSchema);
 
-            await new PayExpenseService(expenseDAO, paymentHistoryDAO).execute(
-                dto,
-            );
+            await payExpenseService.execute(dto);
         },
         middlewares: [
             authorizationAccountSubscriptionMiddleware.handler.bind(
@@ -193,10 +176,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, expenseUndoPaymentSchema);
 
-            await new ExpenseUndoPaymentService(
-                expenseDAO,
-                paymentHistoryDAO,
-            ).execute(dto);
+            await expenseUndoPaymentService.execute(dto);
         },
         middlewares: [
             authorizationAccountSubscriptionMiddleware.handler.bind(
@@ -220,13 +200,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, createExtractSchema);
 
-            return await new CreateExtractService(
-                accountDAO,
-                paymentHistoryDAO,
-                extractDAO,
-                extract,
-                bucket,
-            ).execute(dto);
+            return createExtractService.execute(dto);
         },
         middlewares: [
             authorizationAccountSubscriptionMiddleware.handler.bind(
@@ -246,10 +220,7 @@ export const routes = Middy.build([
 
             Utils.validateRequestSchema(dto, getAccountExtractsSchema);
 
-            return await new GetUserExtractsService(
-                accountDAO,
-                extractDAO,
-            ).execute(dto);
+            return getUserExtractsService.execute(dto);
         },
         middlewares: [
             authorizationAccountSubscriptionMiddleware.handler.bind(
@@ -262,9 +233,7 @@ export const routes = Middy.build([
         method: "POST",
         successStatusCode: 204,
         handler: async (): Promise<void> => {
-            await new UpdatePreviousMonthPaidExpensesToUnpaidService(
-                expenseDAO,
-            ).execute();
+            await updatePreviousMonthPaidExpensesToUnpaidService.execute();
         },
         middlewares: [
             authorizationAccountSubscriptionMiddleware.handler.bind(

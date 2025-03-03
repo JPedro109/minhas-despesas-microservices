@@ -1,5 +1,4 @@
-import { CreateAccountService, DeleteAccountService } from "../services";
-import { accountDAO } from "../factories";
+import { createAccountService, deleteAccountService } from "../factories";
 
 import { SQSEvent } from "aws-lambda";
 
@@ -13,10 +12,10 @@ export const events = async (event: SQSEvent): Promise<void> => {
 
         switch (event) {
             case "create:account":
-                await new CreateAccountService(accountDAO).execute(data);
+                await createAccountService.execute(data);
                 break;
             case "delete:account":
-                await new DeleteAccountService(accountDAO).execute(data);
+                await deleteAccountService.execute(data);
                 break;
         }
     }

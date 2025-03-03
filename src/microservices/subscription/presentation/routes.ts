@@ -1,14 +1,5 @@
 import { Middy, Utils } from "@/shared";
 import {
-    accountDAO,
-    customerDAO,
-    paymentMethodDAO,
-    planDAO,
-    subscriptionDAO,
-    notification,
-    payment,
-} from "../factories";
-import {
     createPaymentMethodSchema,
     deletePaymentMethodSchema,
     getAccountPaymentMethodSchema,
@@ -28,18 +19,21 @@ import {
     GetPlanResponseDTO,
     UpdatePaymentMethodNameDTO,
     UpdatePaymentMethodTokenDTO,
-    CreatePaymentMethodService,
-    CreateSubscriptionService,
-    DeletePaymentMethodService,
-    GetAccountPaymentMethodService,
-    GetAccountSubscriptionService,
-    GetPlansService,
-    NotifyAccountOfSubscriptionPaymentFailureService,
-    UpdatePaymentMethodNameService,
-    UpdatePaymentMethodTokenService,
     UpdateSubscriptionRenewalStatusDTO,
-    UpdateSubscriptionRenewalStatusService,
 } from "../services";
+import {
+    payment,
+    createPaymentMethodService,
+    createSubscriptionService,
+    deletePaymentMethodService,
+    getAccountPaymentMethodService,
+    getAccountSubscriptionService,
+    getPlansService,
+    notifyAccountOfSubscriptionPaymentFailureService,
+    updatePaymentMethodNameService,
+    updatePaymentMethodTokenService,
+    updateSubscriptionRenewalStatusService,
+} from "../factories";
 
 export const routes = Middy.build([
     {
@@ -58,12 +52,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, createPaymentMethodSchema);
 
-            return await new CreatePaymentMethodService(
-                accountDAO,
-                customerDAO,
-                paymentMethodDAO,
-                payment,
-            ).execute(dto);
+            return await createPaymentMethodService.execute(dto);
         },
     },
     {
@@ -79,11 +68,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, deletePaymentMethodSchema);
 
-            await new DeletePaymentMethodService(
-                paymentMethodDAO,
-                subscriptionDAO,
-                payment,
-            ).execute(dto);
+            await deletePaymentMethodService.execute(dto);
         },
     },
     {
@@ -101,10 +86,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, getAccountPaymentMethodSchema);
 
-            return await new GetAccountPaymentMethodService(
-                accountDAO,
-                paymentMethodDAO,
-            ).execute(dto);
+            return await getAccountPaymentMethodService.execute(dto);
         },
     },
     {
@@ -122,9 +104,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, updatePaymentMethodNameSchema);
 
-            await new UpdatePaymentMethodNameService(paymentMethodDAO).execute(
-                dto,
-            );
+            await updatePaymentMethodNameService.execute(dto);
         },
     },
     {
@@ -142,11 +122,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, updatePaymentMethodTokenSchema);
 
-            await new UpdatePaymentMethodTokenService(
-                paymentMethodDAO,
-                customerDAO,
-                payment,
-            ).execute(dto);
+            await updatePaymentMethodTokenService.execute(dto);
         },
     },
     {
@@ -154,7 +130,7 @@ export const routes = Middy.build([
         method: "GET",
         successStatusCode: 200,
         handler: async (): Promise<GetPlanResponseDTO[]> => {
-            return await new GetPlansService(planDAO).execute();
+            return await getPlansService.execute();
         },
     },
     {
@@ -172,14 +148,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, createSubscriptionSchema);
 
-            return await new CreateSubscriptionService(
-                customerDAO,
-                paymentMethodDAO,
-                planDAO,
-                subscriptionDAO,
-                payment,
-                notification,
-            ).execute(dto);
+            return await createSubscriptionService.execute(dto);
         },
     },
     {
@@ -195,12 +164,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, getAccountSubscriptionSchema);
 
-            return await new GetAccountSubscriptionService(
-                accountDAO,
-                subscriptionDAO,
-                planDAO,
-                payment,
-            ).execute(dto);
+            return await getAccountSubscriptionService.execute(dto);
         },
     },
     {
@@ -218,11 +182,7 @@ export const routes = Middy.build([
             };
             Utils.validateRequestSchema(dto, getAccountSubscriptionSchema);
 
-            await new UpdateSubscriptionRenewalStatusService(
-                subscriptionDAO,
-                paymentMethodDAO,
-                payment,
-            ).execute(dto);
+            await updateSubscriptionRenewalStatusService.execute(dto);
         },
     },
     {
@@ -247,11 +207,9 @@ export const routes = Middy.build([
             );
 
             if (type === "invoice.payment_failed") {
-                await new NotifyAccountOfSubscriptionPaymentFailureService(
-                    customerDAO,
-                    accountDAO,
-                    notification,
-                ).execute(dto);
+                await notifyAccountOfSubscriptionPaymentFailureService.execute(
+                    dto,
+                );
             }
         },
     },
