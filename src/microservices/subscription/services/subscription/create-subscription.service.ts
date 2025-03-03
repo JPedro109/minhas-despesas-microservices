@@ -5,6 +5,7 @@ import {
     PaymentMethodDAO,
     PlanDAO,
     SubscriptionDAO,
+    Notification,
 } from "../../infrastructure";
 
 export type CreateSubscriptionDTO = {
@@ -30,6 +31,7 @@ export class CreateSubscriptionService {
         private readonly planDAO: PlanDAO,
         private readonly subscriptionDAO: SubscriptionDAO,
         private readonly payment: Payment,
+        private readonly notify: Notification,
     ) {}
 
     async execute({
@@ -60,6 +62,14 @@ export class CreateSubscriptionService {
                 accountId,
                 subscriptionExternalId,
                 planId,
+            });
+            await this.notify.sendEvent({
+                event: "create:subscription",
+                data: {
+                    accountId,
+                    subscriptionId: subscription.subscriptionId,
+                    active: true,
+                },
             });
             return subscription.subscriptionId;
         } catch (e) {

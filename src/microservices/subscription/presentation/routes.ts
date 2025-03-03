@@ -178,6 +178,7 @@ export const routes = Middy.build([
                 planDAO,
                 subscriptionDAO,
                 payment,
+                notification,
             ).execute(dto);
         },
     },

@@ -1,11 +1,14 @@
-import { envs, SQS } from "@/shared";
+import { envs, SNS, SQS } from "@/shared";
 
 export enum EmailTemplateEnum {
     NotifySubscriptionPaymentFailureTemplate = "notify-subscription-payment-failure-template",
 }
 
 export class Notification {
-    constructor(private readonly queue: SQS) {}
+    constructor(
+        private readonly queue: SQS,
+        private readonly notification: SNS,
+    ) {}
 
     async sendEmail(
         to: string,
@@ -23,5 +26,9 @@ export class Notification {
             pattern: "send_email",
             data: email,
         });
+    }
+
+    async sendEvent(message: object): Promise<void> {
+        await this.notification.publish(envs.eventTopic, message);
     }
 }

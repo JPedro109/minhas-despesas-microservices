@@ -1,4 +1,4 @@
-import { Dynamo, SQS } from "@/shared";
+import { Dynamo, SNS, SQS } from "@/shared";
 import {
     AccountDAO,
     CustomerDAO,
@@ -17,6 +17,7 @@ export const planDAO = new PlanDAO(dynamo);
 export const subscriptionDAO = new SubscriptionDAO(dynamo);
 
 const sqs = new SQS();
-export const notification = new Notification(sqs);
+const sns = new SNS();
+export const notification = new Notification(sqs, sns);
 
 export const payment = new Payment();
