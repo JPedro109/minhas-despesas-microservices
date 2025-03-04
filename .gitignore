@@ -6,6 +6,7 @@
 /subscription
 /expense
 /notification
+/src/dev
 
 .env
 yarn-error.log
