@@ -3,6 +3,7 @@ import "dotenv/config";
 type EnvironmentVariables = {
     nodeEnv: string;
     awsAccessKeyId: string;
+    awsSESSourceEmail: string;
     secretAccessKey: string;
     awsRegion: string;
     awsCognitoClientId: string;
@@ -24,6 +25,7 @@ export const envs: EnvironmentVariables = {
     awsCognitoClientId: process.env.AWS_COGNITO_CLIENT_ID,
     awsCognitoClientSecret: process.env.AWS_COGNITO_CLIENT_SECRET,
     awsCognitoUserPoolId: process.env.AWS_COGNITO_USER_POOL_ID,
+    awsSESSourceEmail: process.env.AWS_SES_SOURCE_EMAIL,
     localstackEndpoint: process.env.LOCALSTACK_ENDPOINT,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     webhookSecret: process.env.WEBHOOK_SECRET,
