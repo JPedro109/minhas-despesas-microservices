@@ -45,6 +45,7 @@ export class ExtractDAO {
                 ExpiryDate: data.expiryDate.toISOString(),
                 CreatedAt: new Date().toISOString(),
                 Url: data.url,
+                expiration_time: Math.floor(data.expiryDate.getTime() / 1000),
             },
         );
 
