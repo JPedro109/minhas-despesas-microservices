@@ -1,0 +1,76 @@
+name: Continuos Deployment
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-lambda:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build microservices
+        run: |
+          yarn esbuild src/microservices/account/init.ts --bundle --minify --platform=node --outdir=account --external:aws-sdk
+          yarn esbuild src/microservices/expense/init.ts --bundle --minify --platform=node --outdir=expense --external:aws-sdk
+          yarn esbuild src/microservices/notification/init.ts --bundle --minify --platform=node --outdir=notification --external:aws-sdk
+          yarn esbuild src/microservices/profile/init.ts --bundle --minify --platform=node --outdir=profile --external:aws-sdk
+          yarn esbuild src/microservices/subscription/init.ts --bundle --minify --platform=node --outdir=subscription --external:aws-sdk
+
+      - name: Copy files not affected by the build to their corresponding folders
+        run: |
+          ls
+          cp -r src/microservices/expense/application/infrastructure/extract/icons expense/
+          cp -r src/microservices/notification/templates notification/
+
+      - name: Zip microservices
+        run: | 
+          zip -r account.zip ./account
+          zip -r profile.zip ./profile
+          zip -r subscription.zip ./subscription
+          zip -r expense.zip ./expense
+          zip -r notification.zip ./notification
+
+      - name: Configure AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+          
+      - name: Update microservices
+        run: |
+          aws lambda update-function-code \
+            --function-name minhas-despesas-account \
+            --zip-file fileb://account.zip
+
+          aws lambda update-function-code \
+            --function-name minhas-despesas-profile \
+            --zip-file fileb://profile.zip
+
+          aws lambda update-function-code \
+            --function-name minhas-despesas-subscription \
+            --zip-file fileb://subscription.zip
+
+          aws lambda update-function-code \
+            --function-name minhas-despesas-expense \
+            --zip-file fileb://expense.zip
+
+          aws lambda update-function-code \
+            --function-name minhas-despesas-notification \
+            --zip-file fileb://notification.zip
