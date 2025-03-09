@@ -17,24 +17,22 @@ Responsável pelo gerenciamento da autenticação e credenciais dos usuários, g
 
 ## 📊 Profile Service
 
-Responsável por armazenar e gerenciar as informações do perfil do usuário.
+Responsável por armazenar e gerenciar as informações do perfil.
 
 - Criação e atualização de informações do perfil
-- Consulta de dados do usuário
+- Consulta do perfil
 
 ## 💳 Subscription Service
 
-Responsável pelo gerenciamento das assinaturas dos usuários, incluindo controle de planos e status de renovação.
+Responsável pelo gerenciamento das assinaturas dos usuários.
 
 - Cadastro, atualização e cancelamento de assinaturas
-- Controle de planos (ex: GOLD, DIAMOND)
-- Gerenciamento de ciclos de renovação
 
 ## 💰 Expense Service
 
 Gerencia as despesas dos usuários, permitindo o controle e acompanhamento de gastos.
 
-- Cadastro, Atualização, Leitura e Exclusão
+- Cadastro, Atualização, Leitura e Exclusão de Despesas
 - Gerenciamento de Pagamento das Despesas
 
 ## 🔔 Notification Service
