@@ -1,0 +1,12 @@
+/node_modules
+/coverage
+
+/account
+/profile
+/subscription
+/expense
+/notification
+/src/dev
+
+.env
+yarn-error.log

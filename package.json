@@ -1,0 +1,53 @@
+{
+  "name": "minhas-despesas-microservices",
+  "version": "1.0.0",
+  "repository": "https://github.com/JPedro109/minhas-despesas-microservices.git",
+  "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "husky",
+    "test": "jest --passWithNoTests --detectOpenHandles --silent",
+    "test:coverage": "yarn test --coverage",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:watch": "yarn test --watchAll",
+    "test:verbose": "jest --passWithNoTests --detectOpenHandles"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@eslint/js": "^9.19.0",
+    "@types/aws-lambda": "^8.10.147",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.1",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.4.2",
+    "ts-jest": "^29.2.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.23.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.744.0",
+    "@aws-sdk/client-dynamodb": "^3.744.0",
+    "@aws-sdk/client-s3": "^3.750.0",
+    "@aws-sdk/client-ses": "^3.758.0",
+    "@aws-sdk/client-sns": "^3.750.0",
+    "@aws-sdk/client-sqs": "^3.750.0",
+    "@aws-sdk/lib-dynamodb": "^3.744.0",
+    "@aws-sdk/s3-request-presigner": "^3.750.0",
+    "@middy/core": "^6.0.0",
+    "@middy/http-json-body-parser": "^6.0.0",
+    "@middy/http-response-serializer": "^6.0.0",
+    "@middy/http-router": "^6.0.0",
+    "handlebars": "^4.7.8",
+    "juice": "^11.0.1",
+    "pdf-lib": "^1.17.1",
+    "stripe": "^17.6.0",
+    "zod": "^3.24.2"
+  }
+}
