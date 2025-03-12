@@ -1,9 +1,11 @@
-name: Continuos Deployment
+name: Deployment Base
 
 on:
-  push:
-    branches:
-      - master
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
 
 jobs:
   update-lambda:
@@ -56,21 +58,21 @@ jobs:
       - name: Update microservices
         run: |
           aws lambda update-function-code \
-            --function-name minhas-despesas-account \
+            --function-name minhas-despesas-account-${{ inputs.environment }} \
             --zip-file fileb://account.zip
 
           aws lambda update-function-code \
-            --function-name minhas-despesas-profile \
+            --function-name minhas-despesas-profile-${{ inputs.environment }} \
             --zip-file fileb://profile.zip
 
           aws lambda update-function-code \
-            --function-name minhas-despesas-subscription \
+            --function-name minhas-despesas-subscription-${{ inputs.environment }} \
             --zip-file fileb://subscription.zip
 
           aws lambda update-function-code \
-            --function-name minhas-despesas-expense \
+            --function-name minhas-despesas-expense-${{ inputs.environment }} \
             --zip-file fileb://expense.zip
 
           aws lambda update-function-code \
-            --function-name minhas-despesas-notification \
+            --function-name minhas-despesas-notification-${{ inputs.environment }} \
             --zip-file fileb://notification.zip

@@ -1,0 +1,16 @@
+name: Deployment Production
+
+on: 
+  push: 
+    branches: 
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  deployment-base:
+    uses: ./.github/workflows/deployment-base.yml
+    with:
+      environment: production
+    secrets: inherit
