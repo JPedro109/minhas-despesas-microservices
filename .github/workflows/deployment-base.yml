@@ -33,6 +33,7 @@ jobs:
           yarn esbuild src/microservices/notification/init.ts --bundle --minify --platform=node --outdir=notification --external:aws-sdk
           yarn esbuild src/microservices/profile/init.ts --bundle --minify --platform=node --outdir=profile --external:aws-sdk
           yarn esbuild src/microservices/subscription/init.ts --bundle --minify --platform=node --outdir=subscription --external:aws-sdk
+          yarn esbuild src/microservices/triggers/pre-authentication-trigger.ts --bundle --minify --platform=node --outdir=pre-authentication-trigger --external:aws-sdk
 
       - name: Copy files not affected by the build to their corresponding folders
         run: |
@@ -47,6 +48,7 @@ jobs:
           zip -r subscription.zip ./subscription
           zip -r expense.zip ./expense
           zip -r notification.zip ./notification
+          zip -r pre-authentication-trigger.zip ./pre-authentication-trigger
 
       - name: Configure AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
@@ -76,3 +78,7 @@ jobs:
           aws lambda update-function-code \
             --function-name minhas-despesas-notification-${{ inputs.environment }} \
             --zip-file fileb://notification.zip
+
+          aws lambda update-function-code \
+            --function-name minhas-despesas-pre-authentication-trigger-${{ inputs.environment }} \
+            --zip-file fileb://pre-authentication-trigger.zip
