@@ -1,4 +1,4 @@
-import { Dynamo, SNS, SQS } from "@/shared";
+import { Dynamo, envs, SNS, SQS } from "@/shared";
 import {
     AccountDAO,
     CustomerDAO,
@@ -9,7 +9,7 @@ import {
     Payment,
 } from "../infrastructure";
 
-const dynamo = new Dynamo("Subscription");
+const dynamo = new Dynamo(envs.subscriptionTableName);
 export const accountDAO = new AccountDAO(dynamo);
 export const customerDAO = new CustomerDAO(dynamo);
 export const paymentMethodDAO = new PaymentMethodDAO(dynamo);

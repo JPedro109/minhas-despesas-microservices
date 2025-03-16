@@ -1,4 +1,4 @@
-import { Dynamo } from "@/shared";
+import { Dynamo, envs } from "@/shared";
 import {
     AccountDAO,
     ExpenseDAO,
@@ -9,7 +9,7 @@ import {
     SubscriptionDAO,
 } from "../infrastructure";
 
-const dynamo = new Dynamo("Expense");
+const dynamo = new Dynamo(envs.expenseTableName);
 export const accountDAO = new AccountDAO(dynamo);
 export const expenseDAO = new ExpenseDAO(dynamo);
 export const extractDAO = new ExtractDAO(dynamo);
