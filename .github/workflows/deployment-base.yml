@@ -1,9 +1,11 @@
-name: Continuos Deployment
+name: Deployment Base
 
 on:
-  push:
-    branches:
-      - master
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
 
 jobs:
   update-lambda:
@@ -31,6 +33,7 @@ jobs:
           yarn esbuild src/microservices/notification/init.ts --bundle --minify --platform=node --outdir=notification --external:aws-sdk
           yarn esbuild src/microservices/profile/init.ts --bundle --minify --platform=node --outdir=profile --external:aws-sdk
           yarn esbuild src/microservices/subscription/init.ts --bundle --minify --platform=node --outdir=subscription --external:aws-sdk
+          yarn esbuild src/microservices/triggers/pre-authentication-trigger.ts --bundle --minify --platform=node --outdir=pre-authentication-trigger --external:aws-sdk
 
       - name: Copy files not affected by the build to their corresponding folders
         run: |
@@ -45,6 +48,7 @@ jobs:
           zip -r subscription.zip ./subscription
           zip -r expense.zip ./expense
           zip -r notification.zip ./notification
+          zip -r pre-authentication-trigger.zip ./pre-authentication-trigger
 
       - name: Configure AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
@@ -56,21 +60,25 @@ jobs:
       - name: Update microservices
         run: |
           aws lambda update-function-code \
-            --function-name minhas-despesas-account \
+            --function-name minhas-despesas-account-${{ inputs.environment }} \
             --zip-file fileb://account.zip
 
           aws lambda update-function-code \
-            --function-name minhas-despesas-profile \
+            --function-name minhas-despesas-profile-${{ inputs.environment }} \
             --zip-file fileb://profile.zip
 
           aws lambda update-function-code \
-            --function-name minhas-despesas-subscription \
+            --function-name minhas-despesas-subscription-${{ inputs.environment }} \
             --zip-file fileb://subscription.zip
 
           aws lambda update-function-code \
-            --function-name minhas-despesas-expense \
+            --function-name minhas-despesas-expense-${{ inputs.environment }} \
             --zip-file fileb://expense.zip
 
           aws lambda update-function-code \
-            --function-name minhas-despesas-notification \
+            --function-name minhas-despesas-notification-${{ inputs.environment }} \
             --zip-file fileb://notification.zip
+
+          aws lambda update-function-code \
+            --function-name minhas-despesas-pre-authentication-trigger-${{ inputs.environment }} \
+            --zip-file fileb://pre-authentication-trigger.zip

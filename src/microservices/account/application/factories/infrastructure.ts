@@ -1,4 +1,4 @@
-import { Dynamo, SNS } from "@/shared";
+import { Dynamo, envs, SNS } from "@/shared";
 import {
     AccountConsentDAO,
     AccountDAO,
@@ -6,7 +6,7 @@ import {
     Notification,
 } from "../infrastructure";
 
-const dynamo = new Dynamo("Account");
+const dynamo = new Dynamo(envs.accountTableName);
 export const accountDAO = new AccountDAO(dynamo);
 export const accountConsentDAO = new AccountConsentDAO(dynamo);
 

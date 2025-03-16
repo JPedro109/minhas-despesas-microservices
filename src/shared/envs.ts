@@ -15,6 +15,10 @@ type EnvironmentVariables = {
     sendEmailQueue: string;
     awsBucketName: string;
     eventTopic: string;
+    accountTableName: string;
+    profileTableName: string;
+    subscriptionTableName: string;
+    expenseTableName: string;
 };
 
 export const envs: EnvironmentVariables = {
@@ -32,4 +36,8 @@ export const envs: EnvironmentVariables = {
     sendEmailQueue: process.env.SEND_EMAIL_QUEUE,
     awsBucketName: process.env.AWS_BUCKET_NAME,
     eventTopic: process.env.EVENT_TOPIC,
+    accountTableName: process.env.ACCOUNT_TABLE_NAME,
+    profileTableName: process.env.PROFILE_TABLE_NAME,
+    subscriptionTableName: process.env.SUBSCRIPTION_TABLE_NAME,
+    expenseTableName: process.env.EXPENSE_TABLE_NAME,
 };
