@@ -13,9 +13,14 @@ export class SNS {
 
         this.client = new SNSClient({
             region: envs.awsRegion,
-            credentials: envs.nodeEnv === "production" ? null : credential,
+            credentials:
+                envs.nodeEnv === "production" || envs.nodeEnv === "staging"
+                    ? null
+                    : credential,
             endpoint:
-                envs.nodeEnv === "production" ? null : envs.localstackEndpoint,
+                envs.nodeEnv === "production" || envs.nodeEnv === "staging"
+                    ? null
+                    : envs.localstackEndpoint,
         });
     }
 

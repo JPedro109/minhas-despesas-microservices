@@ -21,7 +21,10 @@ export const handler = async (event: SQSEvent): Promise<void> => {
             secretAccessKey: envs.secretAccessKey,
         };
         const sesClient = new SESClient({
-            credentials: envs.nodeEnv === "production" ? null : credentials,
+            credentials:
+                envs.nodeEnv === "production" || envs.nodeEnv === "staging"
+                    ? null
+                    : credentials,
             region: envs.awsRegion,
         });
 

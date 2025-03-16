@@ -33,7 +33,10 @@ export class Dynamo {
         };
         this.client = new DynamoDBClient({
             region: envs.awsRegion,
-            credentials: envs.nodeEnv === "production" ? null : credential,
+            credentials:
+                envs.nodeEnv === "production" || envs.nodeEnv === "staging"
+                    ? null
+                    : credential,
         });
 
         this.dynamo = DynamoDBDocumentClient.from(this.client);

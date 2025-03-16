@@ -12,9 +12,14 @@ export class SQS {
         };
         this.client = new SQSClient({
             region: envs.awsRegion,
-            credentials: envs.nodeEnv === "production" ? null : credential,
+            credentials:
+                envs.nodeEnv === "production" || envs.nodeEnv === "staging"
+                    ? null
+                    : credential,
             endpoint:
-                envs.nodeEnv === "production" ? null : envs.localstackEndpoint,
+                envs.nodeEnv === "production" || envs.nodeEnv === "staging"
+                    ? null
+                    : envs.localstackEndpoint,
         });
     }
 

@@ -56,7 +56,10 @@ export class IdentityProvider {
         };
         this.client = new CognitoIdentityProviderClient({
             region: envs.awsRegion,
-            credentials: envs.nodeEnv === "production" ? null : credential,
+            credentials:
+                envs.nodeEnv === "production" || envs.nodeEnv === "staging"
+                    ? null
+                    : credential,
         });
     }
 
