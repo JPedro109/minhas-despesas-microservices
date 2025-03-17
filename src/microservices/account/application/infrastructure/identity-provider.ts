@@ -73,7 +73,10 @@ export class IdentityProvider {
             SecretHash: this.calculateSecretHash(email),
             Username: email,
             Password: password,
-            UserAttributes: [{ Name: "custom:account_id", Value: accountId }],
+            UserAttributes: [
+                { Name: "custom:account_id", Value: accountId },
+                { Name: "email", Value: email },
+            ],
         });
 
         const response = await this.sendCommand<SignUpCommandOutput>(command);
