@@ -256,6 +256,8 @@ export class IdentityProvider {
             const result = await this.client.send(command);
             return result as TOutput;
         } catch (e) {
+            console.error(e.message);
+
             if (
                 e instanceof InvalidParameterException &&
                 e.message.includes("email")
