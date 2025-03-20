@@ -78,12 +78,12 @@ export const routes = Middy.build([
         method: "DELETE",
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
-            const { sub, ["account_id"]: accountId } =
+            const { username, ["account_id"]: accountId } =
                 event.requestContext.authorizer.jwt.claims;
 
             const dto: DeleteAccountDTO = {
                 accountId: accountId as string,
-                identityProviderId: sub as string,
+                identityProviderId: username as string,
             };
             Utils.validateRequestSchema(dto, deleteAccountSchema);
 
@@ -129,11 +129,11 @@ export const routes = Middy.build([
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
             const { newEmail } = event.body;
-            const { sub } = event.requestContext.authorizer.jwt.claims;
+            const { username } = event.requestContext.authorizer.jwt.claims;
 
             const dto: SendAccountEmailUpdateEmailDTO = {
                 newEmail,
-                identityProviderId: sub as string,
+                identityProviderId: username as string,
             };
             Utils.validateRequestSchema(dto, sendAccountEmailUpdateEmailSchema);
 
@@ -161,10 +161,10 @@ export const routes = Middy.build([
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
             const { accessToken, code } = event.body;
-            const { sub } = event.requestContext.authorizer.jwt.claims;
+            const { username } = event.requestContext.authorizer.jwt.claims;
 
             const dto: UpdateAccountEmailDTO = {
-                identityProviderId: sub as string,
+                identityProviderId: username as string,
                 accessToken,
                 code,
             };
@@ -179,10 +179,10 @@ export const routes = Middy.build([
         successStatusCode: 204,
         handler: async (event): Promise<void> => {
             const { newPassword } = event.body;
-            const { sub } = event.requestContext.authorizer.jwt.claims;
+            const { username } = event.requestContext.authorizer.jwt.claims;
 
             const dto: UpdateAccountPasswordDTO = {
-                identityProviderId: sub as string,
+                identityProviderId: username as string,
                 newPassword,
             };
             Utils.validateRequestSchema(dto, updateAccountPasswordSchema);
