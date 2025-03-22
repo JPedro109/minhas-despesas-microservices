@@ -6,6 +6,7 @@ import {
     InvalidParamError,
     NotFoundError,
     UnauthorizedError,
+    Utils,
 } from "@/shared";
 
 import {
@@ -68,10 +69,11 @@ export class IdentityProvider {
         email: string,
         password: string,
     ): Promise<string> {
+        const id = Utils.createUUID();
         const command = new SignUpCommand({
             ClientId: envs.awsCognitoClientId,
-            SecretHash: this.calculateSecretHash(email),
-            Username: email,
+            SecretHash: this.calculateSecretHash(id),
+            Username: id,
             Password: password,
             UserAttributes: [
                 { Name: "custom:account_id", Value: accountId },
